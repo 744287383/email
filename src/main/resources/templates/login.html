@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)https://yaohuo.me/waplogin.aspx -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="妖火,妖火网,妖火论坛">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="/login/css/zero.css">
+    <!--    <script type="text/javascript"  src="css/analytics.js"></script>-->
+    <script src="/login/js/bundle-home.js"></script>
+    <script src="/login/js/zero.js"></script>
+    <style type="text/css">.ui__alert * {
+        padding: 0;
+        margin-top: 0px;
+    }
+
+    .ui__alert .ui__alert_bg {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9998;
+        position: fixed;
+        background: rgba(0, 0, 0, 0.2);
+        -webkit-animation-duration: 500ms;
+        animation-duration: 500ms;
+    }
+
+    .ui__alert .ui__alert_bg.in {
+        -webkit-animation-name: bgFadeIn;
+        animation-name: bgFadeIn;
+    }
+
+    .ui__alert .ui__alert_bg.out {
+        -webkit-animation-name: bgFadeOut;
+        animation-name: bgFadeOut;
+    }
+
+    .ui__alert .ui__alert_content {
+        text-align: center;
+        position: fixed;
+        min-width: 250px;
+        max-width: 280px;
+        z-index: 9999;
+        background: #fff;
+        border-radius: 10px;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        -webkit-animation-duration: 500ms;
+        animation-duration: 500ms;
+    }
+
+    .ui__alert .ui__alert_content.in {
+        -webkit-animation-name: contentZoomIn;
+        animation-name: contentZoomIn;
+    }
+
+    .ui__alert .ui__alert_content.out {
+        -webkit-animation-name: contentZoomOut;
+        animation-name: contentZoomOut;
+    }
+
+    .ui__alert .ui__alert_content .ui__content_body {
+        font-size: 14px;
+        padding: 18px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .ui__alert .ui__alert_content .ui__content_body .ui__title {
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    .ui__alert .ui__alert_content .ui__content_foot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ui__alert .ui__alert_content .ui__content_foot a {
+        font-size: 14px;
+        color: #017aff;
+        display: block;
+        text-decoration: none;
+        flex: 1;
+        text-align: center;
+        line-height: 40px;
+        border-left: 1px solid #eee;
+    }
+
+    .ui__alert .ui__alert_content .ui__content_foot a:first-child {
+        border-left: none;
+    }
+
+    .ui__toast_bg {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9998;
+        position: fixed;
+    }
+
+    .ui__toast_text {
+        line-height: 1;
+        text-align: center;
+        position: fixed;
+        max-width: 200px;
+        z-index: 9999;
+        padding: 14px;
+        color: #fff;
+        background: #000;
+        border-radius: 5px;
+        left: 50%;
+        top: 50%;
+        font-size: 14px;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    @-webkit-keyframes bgFadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes bgFadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes bgFadeOut {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes bgFadeOut {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @-webkit-keyframes contentZoomIn {
+        0% {
+            -webkit-transform: translate(-50%, -30%);
+            transform: translate(-50%, -30%);
+            opacity: 0;
+        }
+        100% {
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+    }
+
+    @keyframes contentZoomIn {
+        0% {
+            -webkit-transform: translate(-50%, -30%);
+            transform: translate(-50%, -30%);
+            opacity: 0;
+        }
+        100% {
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes contentZoomOut {
+        0% {
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+        100% {
+            -webkit-transform: translate(-50%, -30%);
+            transform: translate(-50%, -30%);
+            opacity: 0;
+        }
+    }
+
+    @keyframes contentZoomOut {
+        0% {
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+        100% {
+            -webkit-transform: translate(-50%, -30%);
+            transform: translate(-50%, -30%);
+            opacity: 0;
+        }
+    }
+    </style>
+
+</head>
+<body id="login" class="unloaded">
+<div class="wrapper">
+    <div class="zero"></div>
+    <div class="login">
+        <form action="/login" method="post" class="container offset1 loginform">
+            <div id="owl-login">
+                <div class="eye`s"></div>
+                <div class="arm-up-right"></div>
+                <div class="arm-up-left"></div>
+                <div class="arm-down-left"></div>
+                <div class="arm-down-right"></div>
+            </div>
+            <div class="pad">
+                <div class="control-group">
+                    <div class="controls"><label for="email" class="control-label fa fa-envelope"></label>
+                        <input
+                                id="email" type="text" name="useremail" placeholder="邮箱地址" tabindex="1"
+                                autofocus="autofocus"
+                                required="" class="form-control input-medium" value=""></div>
+                </div>
+                <div class="control-group">
+                    <div class="controls"><label for="password" class="control-label fa fa-asterisk"> </label> <input
+                            id="password" type="password" name="password" placeholder="请输入密码" tabindex="2" required=""
+                            class="form-control input-medium" value="123456"> <input type="hidden" name="action"
+                                                                               value="login"><input type="hidden"
+                                                                                                    name="classid"
+                                                                                                    value="0"><input
+                            type="hidden" name="siteid" value="1000"><input type="hidden" name="sid" value="-3-0-0-0-0"><input
+                            type="hidden" name="backurl" value=""><input type="hidden" name="savesid" checked="checked"
+                                                                         value="0"></div>
+                </div>
+            </div>
+            <div class="form-actions"><a id="alert" tabindex="5" class="btn pull-left btn-link text-muted">忘记密码</a>
+                <button type="submit" tabindex="4" class="btn btn-primary">登录</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script> document.getElementById('alert').onclick = function () {
+    alert('请联系站长QQ：183202721')
+} </script>
+<!--<script async="" src="css/js.js"></script>-->
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-88858350-1');
+</script>
+
+</body>
+</html>

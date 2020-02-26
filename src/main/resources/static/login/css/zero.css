@@ -1,0 +1,720 @@
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+a:focus {
+    outline: thin dotted;
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+button,
+input {
+    margin: 0;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+button,
+input {
+    line-height: normal;
+}
+
+button {
+    text-transform: none;
+}
+
+button {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+@media print {
+    * {
+        color: #000 !important;
+        text-shadow: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    @page {
+        margin: 2cm .5cm;
+    }
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+input,
+button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button,
+input {
+    background-image: none;
+}
+
+a {
+    color: #428bca;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: #2a6496;
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: thin dotted #333;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.text-muted {
+    color: #999999;
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container:before,
+.container:after {
+    display: table;
+    content: " ";
+}
+
+.container:after {
+    clear: both;
+}
+
+.container:before,
+.container:after {
+    display: table;
+    content: " ";
+}
+
+.container:after {
+    clear: both;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1170px;
+    }
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control:-moz-placeholder {
+    color: #999999;
+}
+
+.form-control::-moz-placeholder {
+    color: #999999;
+}
+
+.form-control:-ms-input-placeholder {
+    color: #999999;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #999999;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555555;
+    vertical-align: middle;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.btn:focus {
+    outline: thin dotted #333;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.btn:hover,
+.btn:focus {
+    color: #333333;
+    text-decoration: none;
+}
+
+.btn:active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+}
+
+.btn-primary:active {
+    background-image: none;
+}
+
+.btn-link {
+    font-weight: normal;
+    color: #428bca;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.btn-link,
+.btn-link:active {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.btn-link,
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active {
+    border-color: transparent;
+}
+
+.btn-link:hover,
+.btn-link:focus {
+    color: #2a6496;
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+/*@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('./fonts/glyphicons-halflings-regular.eot');
+  src: url('./fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('./fonts/glyphicons-halflings-regular.woff') format('woff'), url('./fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('./fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}*/
+
+.pull-left {
+    float: left !important;
+}
+
+@-ms-viewport {
+    width: device-width;
+}
+
+@media screen and (max-width: 400px) {
+    @-ms-viewport {
+        width: 320px;
+    }
+}
+
+/*!
+ *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('/login/fonts/fontawesome-webfont.eot?v=4.7.0');
+    src: url('/login/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('/login/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('/login/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('/login/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('/login/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.pull-left {
+    float: left
+}
+
+.fa-asterisk:before {
+    content: "\f069"
+}
+
+.fa-envelope:before {
+    content: "\f0e0"
+}
+
+@font-face {
+    font-family: 'ReadMe-Icons';
+    src: url('/login/fonts/ReadMe-Icons.eot?r9qq2b');
+    src: url('/login/fonts/ReadMe-Icons.eot?r9qq2b#iefix') format('embedded-opentype'),
+    url('/login/fonts/ReadMe-Icons.woff2?r9qq2b') format('woff2'),
+    url('/login/fonts/ReadMe-Icons.ttf?r9qq2b') format('truetype'),
+    url('/login/fonts/ReadMe-Icons.woff?r9qq2b') format('woff'),
+    url('/login/fonts/ReadMe-Icons.svg?r9qq2b#ReadMe-Icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+body {
+    background-color: #018ef5;
+    font-family: 'Open Sans', sans-serif
+}
+
+body > .wrapper {
+    background: #fff
+}
+
+a {
+    color: #018ef5
+}
+
+a:hover, a:active, a:focus {
+    text-decoration: none;
+    color: #0172c4
+}
+
+.btn-primary {
+    background-color: #018ef5
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #0172c4
+}
+
+a.btn-link {
+    color: #018ef5
+}
+
+a.btn-link:hover, a.btn-link:active, a.btn-link:focus {
+    color: #0172c4;
+    text-decoration: none
+}
+
+a.btn-link.text-muted {
+    color: #ccc
+}
+
+a.btn-link.text-muted:hover, a.btn-link.text-muted:active, a.btn-link.text-muted:focus {
+    color: #018ef5
+}
+
+#login, .login {
+    background-color: #eee
+}
+
+#login #owl-login, #register #owl-login, #unsubscribe #owl-login, .login #owl-login {
+    width: 116px;
+    height: 92px;
+    background-image: url("/login/img/face.png");
+    position: absolute;
+    top: -82px;
+    left: 50%;
+    margin-left: -64px
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5),(min--moz-device-pixel-ratio: 1.5),(-o-min-device-pixel-ratio: 1.5/1),(min-device-pixel-ratio: 1.5),(min-resolution: 138dpi),(min-resolution: 1.5dppx) {
+    #login #owl-login, #register #owl-login, #unsubscribe #owl-login, .login #owl-login {
+        background-image: url("/login/img/face.png");
+        -webkit-background-size: 116px 92px;
+        -moz-background-size: 116px 92px;
+        background-size: 116px 92px
+    }
+}
+
+#login #owl-login .eyes, #register #owl-login .eyes, #unsubscribe #owl-login .eyes, .login #owl-login .eyes {
+    width: 100%;
+    height: 100%;
+    background-image: url("/login/img/eyes.png");
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -webkit-transition: 0.1s ease-out 0s;
+    -moz-transition: 0.1s ease-out 0s;
+    -o-transition: 0.1s ease-out 0s;
+    -ms-transition: 0.1s ease-out 0s;
+    transition: 0.1s ease-out 0s
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5),(min--moz-device-pixel-ratio: 1.5),(-o-min-device-pixel-ratio: 1.5/1),(min-device-pixel-ratio: 1.5),(min-resolution: 138dpi),(min-resolution: 1.5dppx) {
+    #login #owl-login .eyes, #register #owl-login .eyes, #unsubscribe #owl-login .eyes, .login #owl-login .eyes {
+        background-image: url("/login/img/eyes.png");
+        -webkit-background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
+        background-size: 100% 100%
+    }
+}
+
+#login #owl-login .arm-down-left, #register #owl-login .arm-down-left, #unsubscribe #owl-login .arm-down-left, .login #owl-login .arm-down-left {
+    width: 43px;
+    height: 25px;
+    background-image: url("/login/img/arm-down-left.png");
+    position: absolute;
+    bottom: 2px;
+    left: -34px;
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5),(min--moz-device-pixel-ratio: 1.5),(-o-min-device-pixel-ratio: 1.5/1),(min-device-pixel-ratio: 1.5),(min-resolution: 138dpi),(min-resolution: 1.5dppx) {
+    #login #owl-login .arm-down-left, #register #owl-login .arm-down-left, #unsubscribe #owl-login .arm-down-left, .login #owl-login .arm-down-left {
+        background-image: url("/login/img/arm-down-left@2x.png");
+        -webkit-background-size: 43px 25px;
+        -moz-background-size: 43px 25px;
+        background-size: 43px 25px
+    }
+}
+
+#login #owl-login .arm-down-right, #register #owl-login .arm-down-right, #unsubscribe #owl-login .arm-down-right, .login #owl-login .arm-down-right {
+    width: 43px;
+    height: 26px;
+    background-image: url("/login/img/arm-down-right.png");
+    position: absolute;
+    bottom: 1px;
+    right: -40px;
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5),(min--moz-device-pixel-ratio: 1.5),(-o-min-device-pixel-ratio: 1.5/1),(min-device-pixel-ratio: 1.5),(min-resolution: 138dpi),(min-resolution: 1.5dppx) {
+    #login #owl-login .arm-down-right, #register #owl-login .arm-down-right, #unsubscribe #owl-login .arm-down-right, .login #owl-login .arm-down-right {
+        background-image: url("/login/img/arm-down-right.png");
+        -webkit-background-size: 43px 26px;
+        -moz-background-size: 43px 26px;
+        background-size: 43px 26px
+    }
+}
+
+#login #owl-login .arm-up-left, #register #owl-login .arm-up-left, #unsubscribe #owl-login .arm-up-left, .login #owl-login .arm-up-left {
+    width: 52px;
+    height: 41px;
+    background-image: url("/login/img/arm-up-left.png");
+    position: absolute;
+    bottom: 11px;
+    left: -3px;
+    -webkit-transform: translateX(-34px) scale(.8);
+    -moz-transform: translateX(-34px) scale(.8);
+    -o-transform: translateX(-34px) scale(.8);
+    -ms-transform: translateX(-34px) scale(.8);
+    transform: translateX(-34px) scale(.8);
+    -webkit-transform-origin: 0 40px;
+    -moz-transform-origin: 0 40px;
+    -o-transform-origin: 0 40px;
+    -ms-transform-origin: 0 40px;
+    transform-origin: 0 40px;
+    -webkit-transition: background-position 0.3s ease-out, -webkit-transform 0.3s ease-out, opacity 0s linear 0.3s;
+    -moz-transition: background-position 0.3s ease-out, -moz-transform 0.3s ease-out, opacity 0s linear 0.3s;
+    -o-transition: background-position 0.3s ease-out, -o-transform 0.3s ease-out, opacity 0s linear 0.3s;
+    -ms-transition: background-position 0.3s ease-out, -ms-transform 0.3s ease-out, opacity 0s linear 0.3s;
+    transition: background-position 0.3s ease-out, transform 0.3s ease-out, opacity 0s linear 0.3s;
+    background-position: 0 25px;
+    background-repeat: no-repeat;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0)
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5),(min--moz-device-pixel-ratio: 1.5),(-o-min-device-pixel-ratio: 1.5/1),(min-device-pixel-ratio: 1.5),(min-resolution: 138dpi),(min-resolution: 1.5dppx) {
+    #login #owl-login .arm-up-left, #register #owl-login .arm-up-left, #unsubscribe #owl-login .arm-up-left, .login #owl-login .arm-up-left {
+        background-image: url("/login/img/arm-up-left.png");
+        -webkit-background-size: 52px 41px;
+        -moz-background-size: 52px 41px;
+        background-size: 52px 41px
+    }
+}
+
+#login #owl-login .arm-up-right, #register #owl-login .arm-up-right, #unsubscribe #owl-login .arm-up-right, .login #owl-login .arm-up-right {
+    width: 51px;
+    height: 41px;
+    background-image: url("/login/img/arm-up-right.png");
+    position: absolute;
+    bottom: 11px;
+    right: 5px;
+    -webkit-transform: translateX(57px) scale(.8);
+    -moz-transform: translateX(57px) scale(.8);
+    -o-transform: translateX(57px) scale(.8);
+    -ms-transform: translateX(57px) scale(.8);
+    transform: translateX(57px) scale(.8);
+    -webkit-transform-origin: 0 40px;
+    -moz-transform-origin: 0 40px;
+    -o-transform-origin: 0 40px;
+    -ms-transform-origin: 0 40px;
+    transform-origin: 0 40px;
+    -webkit-transition: background-position 0.3s ease-out, -webkit-transform 0.3s ease-out, opacity 0s linear 0.3s;
+    -moz-transition: background-position 0.3s ease-out, -moz-transform 0.3s ease-out, opacity 0s linear 0.3s;
+    -o-transition: background-position 0.3s ease-out, -o-transform 0.3s ease-out, opacity 0s linear 0.3s;
+    -ms-transition: background-position 0.3s ease-out, -ms-transform 0.3s ease-out, opacity 0s linear 0.3s;
+    transition: background-position 0.3s ease-out, transform 0.3s ease-out, opacity 0s linear 0.3s;
+    background-position: 0 25px;
+    background-repeat: no-repeat;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0)
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5),(min--moz-device-pixel-ratio: 1.5),(-o-min-device-pixel-ratio: 1.5/1),(min-device-pixel-ratio: 1.5),(min-resolution: 138dpi),(min-resolution: 1.5dppx) {
+    #login #owl-login .arm-up-right, #register #owl-login .arm-up-right, #unsubscribe #owl-login .arm-up-right, .login #owl-login .arm-up-right {
+        background-image: url("/login/img/arm-up-right.png");
+        -webkit-background-size: 51px 41px;
+        -moz-background-size: 51px 41px;
+        background-size: 51px 41px
+    }
+}
+
+#login #owl-login.password .eyes, #register #owl-login.password .eyes, #unsubscribe #owl-login.password .eyes, .login #owl-login.password .eyes {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+    -webkit-transition: 0.1s ease-out 0.2s;
+    -moz-transition: 0.1s ease-out 0.2s;
+    -o-transition: 0.1s ease-out 0.2s;
+    -ms-transition: 0.1s ease-out 0.2s;
+    transition: 0.1s ease-out 0.2s
+}
+
+#login #owl-login.password .arm-down-left, #register #owl-login.password .arm-down-left, #unsubscribe #owl-login.password .arm-down-left, .login #owl-login.password .arm-down-left {
+    -webkit-transform: translateX(40px) scale(0) translateY(-10px);
+    -moz-transform: translateX(40px) scale(0) translateY(-10px);
+    -o-transform: translateX(40px) scale(0) translateY(-10px);
+    -ms-transform: translateX(40px) scale(0) translateY(-10px);
+    transform: translateX(40px) scale(0) translateY(-10px);
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0)
+}
+
+#login #owl-login.password .arm-up-left, #register #owl-login.password .arm-up-left, #unsubscribe #owl-login.password .arm-up-left, .login #owl-login.password .arm-up-left {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    background-position: 0 0;
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+    -webkit-transition: background-position 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    -moz-transition: background-position 0.3s ease-out, -moz-transform 0.3s ease-out;
+    -o-transition: background-position 0.3s ease-out, -o-transform 0.3s ease-out;
+    -ms-transition: background-position 0.3s ease-out, -ms-transform 0.3s ease-out;
+    transition: background-position 0.3s ease-out, transform 0.3s ease-out
+}
+
+#login #owl-login.password .arm-down-right, #register #owl-login.password .arm-down-right, #unsubscribe #owl-login.password .arm-down-right, .login #owl-login.password .arm-down-right {
+    -webkit-transform: translateX(-32px) scale(0) translateY(-8px);
+    -moz-transform: translateX(-32px) scale(0) translateY(-8px);
+    -o-transform: translateX(-32px) scale(0) translateY(-8px);
+    -ms-transform: translateX(-32px) scale(0) translateY(-8px);
+    transform: translateX(-32px) scale(0) translateY(-8px);
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0)
+}
+
+#login #owl-login.password .arm-up-right, #register #owl-login.password .arm-up-right, #unsubscribe #owl-login.password .arm-up-right, .login #owl-login.password .arm-up-right {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    background-position: 0 0;
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+    -webkit-transition: background-position 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    -moz-transition: background-position 0.3s ease-out, -moz-transform 0.3s ease-out;
+    -o-transition: background-position 0.3s ease-out, -o-transform 0.3s ease-out;
+    -ms-transition: background-position 0.3s ease-out, -ms-transform 0.3s ease-out;
+    transition: background-position 0.3s ease-out, transform 0.3s ease-out
+}
+
+#login
+.loginform, .login .loginform {
+    margin-top: 200px;
+    position: relative;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    position: relative;
+    max-width: 400px;
+    padding: 0
+}
+
+#login .loginform .controls, .login .loginform .controls {
+    position: relative;
+    margin-bottom: 10px
+}
+
+#login .loginform input, .login .loginform input {
+    color: #444
+}
+
+#login .loginform .pad, .login .loginform .pad {
+    overflow: hidden;
+    padding: 30px
+}
+
+#login .loginform .form-actions, .login .loginform .form-actions {
+    border-top: 1px solid #e4e4e4;
+    background-color: #f7f7f7;
+    padding: 15px 30px;
+    text-align: right
+}
+
+#login input:-webkit-autofill, .login input:-webkit-autofill {
+    color: #fff !important
+}
+
+#login .login {
+    background-color: #018ef5;
+    height: 200px
+}
+
+#login .loginform {
+    margin-top: 0;
+    top: 100px
+}
+
+#login .loginform label {
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.3)
+}
+
+#login .loginform input {
+    padding: 9px 6px 9px 40px;
+    height: auto
+}
+
+.zero {
+    margin: 0 auto;
+    height: 80px;
+    background-color: #018ef5;
+}
+
+.tip {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 120%;
+    text-align: left;
+    background-color: #ffffc0;
+    border-left: 5px solid #fff000;
+    border-bottom: 1px solid var(--box-border-color);
+    color: #333;
+}
