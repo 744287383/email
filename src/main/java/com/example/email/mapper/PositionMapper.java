@@ -5,7 +5,9 @@ import com.example.email.entity.PositionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface PositionMapper {
     long countByExample(PositionExample example);
 

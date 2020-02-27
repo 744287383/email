@@ -3,9 +3,13 @@ package com.example.email.mapper;
 import com.example.email.entity.Staff;
 import com.example.email.entity.StaffExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface StaffMapper {
     long countByExample(StaffExample example);
 
