@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.email.mapper.MassageMapper">
+  <resultMap id="BaseResultMap" type="com.example.email.entity.Massage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="message_name" jdbcType="VARCHAR" property="messageName" />
+    <result column="sender" jdbcType="VARCHAR" property="sender" />
+    <result column="last_updated" jdbcType="TIMESTAMP" property="lastUpdated" />
+    <result column="readed" jdbcType="INTEGER" property="readed" />
+    <result column="sender_status" jdbcType="INTEGER" property="senderStatus" />
+    <result column="new_msg" jdbcType="INTEGER" property="newMsg" />
+    <result column="is_file" jdbcType="INTEGER" property="isFile" />
+    <result column="rec__status" jdbcType="INTEGER" property="recStatus" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.email.entity.Massage">
+    <result column="recipients" jdbcType="LONGVARCHAR" property="recipients" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, message_name, sender, last_updated, readed, sender_status, new_msg, is_file, 
+    rec__status
+  </sql>
+  <sql id="Blob_Column_List">
+    recipients
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.email.entity.MassageExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.email.entity.MassageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.email.entity.MassageExample">
+    delete from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.email.entity.Massage">
+    insert into message (id, message_name, sender, 
+      last_updated, readed, sender_status, 
+      new_msg, is_file, rec__status, 
+      recipients)
+    values (#{id,jdbcType=BIGINT}, #{messageName,jdbcType=VARCHAR}, #{sender,jdbcType=VARCHAR}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{readed,jdbcType=INTEGER}, #{senderStatus,jdbcType=INTEGER}, 
+      #{newMsg,jdbcType=INTEGER}, #{isFile,jdbcType=INTEGER}, #{recStatus,jdbcType=INTEGER}, 
+      #{recipients,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.email.entity.Massage">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="messageName != null">
+        message_name,
+      </if>
+      <if test="sender != null">
+        sender,
+      </if>
+      <if test="lastUpdated != null">
+        last_updated,
+      </if>
+      <if test="readed != null">
+        readed,
+      </if>
+      <if test="senderStatus != null">
+        sender_status,
+      </if>
+      <if test="newMsg != null">
+        new_msg,
+      </if>
+      <if test="isFile != null">
+        is_file,
+      </if>
+      <if test="recStatus != null">
+        rec__status,
+      </if>
+      <if test="recipients != null">
+        recipients,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="messageName != null">
+        #{messageName,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null">
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null">
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readed != null">
+        #{readed,jdbcType=INTEGER},
+      </if>
+      <if test="senderStatus != null">
+        #{senderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newMsg != null">
+        #{newMsg,jdbcType=INTEGER},
+      </if>
+      <if test="isFile != null">
+        #{isFile,jdbcType=INTEGER},
+      </if>
+      <if test="recStatus != null">
+        #{recStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recipients != null">
+        #{recipients,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.email.entity.MassageExample" resultType="java.lang.Long">
+    select count(*) from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update message
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.messageName != null">
+        message_name = #{record.messageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sender != null">
+        sender = #{record.sender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastUpdated != null">
+        last_updated = #{record.lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.readed != null">
+        readed = #{record.readed,jdbcType=INTEGER},
+      </if>
+      <if test="record.senderStatus != null">
+        sender_status = #{record.senderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.newMsg != null">
+        new_msg = #{record.newMsg,jdbcType=INTEGER},
+      </if>
+      <if test="record.isFile != null">
+        is_file = #{record.isFile,jdbcType=INTEGER},
+      </if>
+      <if test="record.recStatus != null">
+        rec__status = #{record.recStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.recipients != null">
+        recipients = #{record.recipients,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update message
+    set id = #{record.id,jdbcType=BIGINT},
+      message_name = #{record.messageName,jdbcType=VARCHAR},
+      sender = #{record.sender,jdbcType=VARCHAR},
+      last_updated = #{record.lastUpdated,jdbcType=TIMESTAMP},
+      readed = #{record.readed,jdbcType=INTEGER},
+      sender_status = #{record.senderStatus,jdbcType=INTEGER},
+      new_msg = #{record.newMsg,jdbcType=INTEGER},
+      is_file = #{record.isFile,jdbcType=INTEGER},
+      rec__status = #{record.recStatus,jdbcType=INTEGER},
+      recipients = #{record.recipients,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update message
+    set id = #{record.id,jdbcType=BIGINT},
+      message_name = #{record.messageName,jdbcType=VARCHAR},
+      sender = #{record.sender,jdbcType=VARCHAR},
+      last_updated = #{record.lastUpdated,jdbcType=TIMESTAMP},
+      readed = #{record.readed,jdbcType=INTEGER},
+      sender_status = #{record.senderStatus,jdbcType=INTEGER},
+      new_msg = #{record.newMsg,jdbcType=INTEGER},
+      is_file = #{record.isFile,jdbcType=INTEGER},
+      rec__status = #{record.recStatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.email.entity.Massage">
+    update message
+    <set>
+      <if test="messageName != null">
+        message_name = #{messageName,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null">
+        sender = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null">
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readed != null">
+        readed = #{readed,jdbcType=INTEGER},
+      </if>
+      <if test="senderStatus != null">
+        sender_status = #{senderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newMsg != null">
+        new_msg = #{newMsg,jdbcType=INTEGER},
+      </if>
+      <if test="isFile != null">
+        is_file = #{isFile,jdbcType=INTEGER},
+      </if>
+      <if test="recStatus != null">
+        rec__status = #{recStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recipients != null">
+        recipients = #{recipients,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.email.entity.Massage">
+    update message
+    set message_name = #{messageName,jdbcType=VARCHAR},
+      sender = #{sender,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      readed = #{readed,jdbcType=INTEGER},
+      sender_status = #{senderStatus,jdbcType=INTEGER},
+      new_msg = #{newMsg,jdbcType=INTEGER},
+      is_file = #{isFile,jdbcType=INTEGER},
+      rec__status = #{recStatus,jdbcType=INTEGER},
+      recipients = #{recipients,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.email.entity.Massage">
+    update message
+    set message_name = #{messageName,jdbcType=VARCHAR},
+      sender = #{sender,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      readed = #{readed,jdbcType=INTEGER},
+      sender_status = #{senderStatus,jdbcType=INTEGER},
+      new_msg = #{newMsg,jdbcType=INTEGER},
+      is_file = #{isFile,jdbcType=INTEGER},
+      rec__status = #{recStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.example.email.entity.MassageExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.example.email.entity.MassageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
