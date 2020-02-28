@@ -5,7 +5,9 @@ import com.example.email.entity.MassageExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface MassageMapper {
     long countByExample(MassageExample example);
 

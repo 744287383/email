@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="zh">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -32,9 +32,11 @@
         <ul class="sidebar-menu">
             <div class="header" style="text-align: center">
                 <a href="#">
-                <img src="/images/tx.png" alt="..." class="img-circle img-thumbnail">
-                <br><label>谭建</label>
-                <br><span>tj202002251@test.com</span>
+
+
+                <img  alt="..." th:src="${loginUser.imgUrl}" class="img-circle img-thumbnail">
+                <br><label th:text="${loginUser.nameall}"></label>
+                <br><span th:text="${loginUser.email}"></span>
                 </a>
             </div>
             <li class="header">菜单选项</li>

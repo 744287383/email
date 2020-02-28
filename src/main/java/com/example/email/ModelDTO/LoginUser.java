@@ -10,5 +10,6 @@ public class LoginUser {
     private String emailPassword;
     private String nameall;
     private String imgUrl;
-    private String authorrity;
+    private String authorrityName;
+    private String positionName;
 }

@@ -5,11 +5,15 @@ import com.example.email.entity.UsersExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface UsersMapper {
     long countByExample(UsersExample example);
 
     int deleteByExample(UsersExample example);
+
+    int deleteByPrimaryKey(String username);
 
     int insert(Users record);
 
@@ -19,7 +23,13 @@ public interface UsersMapper {
 
     List<Users> selectByExample(UsersExample example);
 
+    Users selectByPrimaryKey(String username);
+
     int updateByExampleSelective(@Param("record") Users record, @Param("example") UsersExample example);
 
     int updateByExample(@Param("record") Users record, @Param("example") UsersExample example);
+
+    int updateByPrimaryKeySelective(Users record);
+
+    int updateByPrimaryKey(Users record);
 }

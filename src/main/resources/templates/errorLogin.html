@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0031)https://yaohuo.me/waplogin.aspx -->
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0">
     <title>登录</title>
     <link rel="stylesheet" href="/login/css/zero.css">
-<!--    <script type="text/javascript"  src="css/analytics.js"></script>-->
+    <!--    <script type="text/javascript"  src="css/analytics.js"></script>-->
     <script src="/login/js/bundle-home.js"></script>
     <script src="/login/js/zero.js"></script>
     <style type="text/css">.ui__alert * {
@@ -213,11 +213,13 @@
 
 </head>
 <body id="login" class="unloaded">
-<div class="tip">请确认账号正确</div>
+<div class="tip" th:if="${#fields.hasErrors('loginDTO.email')}" th:errors="${loginDTO.email}"></div>
+<div class="tip" th:if="${#fields.hasErrors('loginDTO.password')}" th:errors="${loginDTO.password}"></div>
+<!--<div class="tip" th:if="${#fields.hasErrors('email')}" th:text="${#fields.idFromName('email')}"></div>-->
 <div class="wrapper">
     <div class="zero"></div>
     <div class="login">
-        <form action="/login" method="post" name="login" class="container offset1 loginform">
+        <form action="/login" method="post" class="container offset1 loginform">
             <div id="owl-login">
                 <div class="eye`s"></div>
                 <div class="arm-up-right"></div>
@@ -229,16 +231,17 @@
                 <div class="control-group">
                     <div class="controls"><label for="email" class="control-label fa fa-envelope"></label>
                         <input
-                           id="email" type="text" name="useremail" placeholder="邮箱地址" tabindex="1" autofocus="autofocus"
-                            required="" class="form-control input-medium" value=""></div>
+                                id="email" type="text" name="email" placeholder="邮箱地址" tabindex="1"
+                                autofocus="autofocus"
+                                required="" class="form-control input-medium" value=""></div>
                 </div>
                 <div class="control-group">
                     <div class="controls"><label for="password" class="control-label fa fa-asterisk"> </label> <input
-                            id="password" type="password" name="logpass" placeholder="请输入密码" tabindex="2" required=""
-                            class="form-control input-medium" value=""> <input type="hidden" name="action"
-                                                                               value="login"><input type="hidden"
-                                                                                                    name="classid"
-                                                                                                    value="0"><input
+                            id="password" type="password" name="password" placeholder="请输入密码" tabindex="2" required=""
+                            class="form-control input-medium" value="123456"> <input type="hidden" name="action"
+                                                                                     value="login"><input type="hidden"
+                                                                                                          name="classid"
+                                                                                                          value="0"><input
                             type="hidden" name="siteid" value="1000"><input type="hidden" name="sid" value="-3-0-0-0-0"><input
                             type="hidden" name="backurl" value=""><input type="hidden" name="savesid" checked="checked"
                                                                          value="0"></div>

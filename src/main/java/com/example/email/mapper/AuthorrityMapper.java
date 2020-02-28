@@ -3,8 +3,6 @@ package com.example.email.mapper;
 import com.example.email.entity.Authorrity;
 import com.example.email.entity.AuthorrityExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;

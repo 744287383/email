@@ -19,7 +19,9 @@ public class Staff {
 
     private String nameall;
 
-    private Long position;
+    private Long positionId;
+
+    private String imgUrl;
 
     private String cardNo;
 
@@ -31,7 +33,30 @@ public class Staff {
 
     private Long deptNo;
 
-    private String imgUrl;
+    private String token;
+
+    public Staff(Long id, String userName, String loginPassword, String email, String emailPassword, Date startTime, Date loginTime, String nameall, Long positionId, String imgUrl, String cardNo, String qq, String wechatNo, String cellPhone, Long deptNo, String token) {
+        this.id = id;
+        this.userName = userName;
+        this.loginPassword = loginPassword;
+        this.email = email;
+        this.emailPassword = emailPassword;
+        this.startTime = startTime;
+        this.loginTime = loginTime;
+        this.nameall = nameall;
+        this.positionId = positionId;
+        this.imgUrl = imgUrl;
+        this.cardNo = cardNo;
+        this.qq = qq;
+        this.wechatNo = wechatNo;
+        this.cellPhone = cellPhone;
+        this.deptNo = deptNo;
+        this.token = token;
+    }
+
+    public Staff() {
+        super();
+    }
 
     public Long getId() {
         return id;
@@ -97,12 +122,20 @@ public class Staff {
         this.nameall = nameall == null ? null : nameall.trim();
     }
 
-    public Long getPosition() {
-        return position;
+    public Long getPositionId() {
+        return positionId;
     }
 
-    public void setPosition(Long position) {
-        this.position = position;
+    public void setPositionId(Long positionId) {
+        this.positionId = positionId;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 
     public String getCardNo() {
@@ -145,12 +178,12 @@ public class Staff {
         this.deptNo = deptNo;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getToken() {
+        return token;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
+    public void setToken(String token) {
+        this.token = token == null ? null : token.trim();
     }
 
     @Override
@@ -167,13 +200,14 @@ public class Staff {
         sb.append(", startTime=").append(startTime);
         sb.append(", loginTime=").append(loginTime);
         sb.append(", nameall=").append(nameall);
-        sb.append(", position=").append(position);
+        sb.append(", positionId=").append(positionId);
+        sb.append(", imgUrl=").append(imgUrl);
         sb.append(", cardNo=").append(cardNo);
         sb.append(", qq=").append(qq);
         sb.append(", wechatNo=").append(wechatNo);
         sb.append(", cellPhone=").append(cellPhone);
         sb.append(", deptNo=").append(deptNo);
-        sb.append(", imgUrl=").append(imgUrl);
+        sb.append(", token=").append(token);
         sb.append("]");
         return sb.toString();
     }

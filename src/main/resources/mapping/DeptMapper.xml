@@ -2,9 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.email.mapper.DeptMapper">
   <resultMap id="BaseResultMap" type="com.example.email.entity.Dept">
-    <id column="dept_no" jdbcType="BIGINT" property="deptNo" />
-    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <constructor>
+      <idArg column="dept_no" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="dept_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

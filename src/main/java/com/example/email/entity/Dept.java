@@ -9,6 +9,16 @@ public class Dept {
 
     private Date createTime;
 
+    public Dept(Long deptNo, String deptName, Date createTime) {
+        this.deptNo = deptNo;
+        this.deptName = deptName;
+        this.createTime = createTime;
+    }
+
+    public Dept() {
+        super();
+    }
+
     public Long getDeptNo() {
         return deptNo;
     }

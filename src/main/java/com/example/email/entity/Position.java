@@ -13,6 +13,18 @@ public class Position {
 
     private Long authId;
 
+    public Position(Long positionId, String positionName, Date createTime, Date modifyTime, Long authId) {
+        this.positionId = positionId;
+        this.positionName = positionName;
+        this.createTime = createTime;
+        this.modifyTime = modifyTime;
+        this.authId = authId;
+    }
+
+    public Position() {
+        super();
+    }
+
     public Long getPositionId() {
         return positionId;
     }

@@ -23,6 +23,35 @@ public class Massage {
 
     private String recipients;
 
+    public Massage(Long id, String messageName, String sender, Date lastUpdated, Integer readed, Integer senderStatus, Integer newMsg, Integer isFile, Integer recStatus) {
+        this.id = id;
+        this.messageName = messageName;
+        this.sender = sender;
+        this.lastUpdated = lastUpdated;
+        this.readed = readed;
+        this.senderStatus = senderStatus;
+        this.newMsg = newMsg;
+        this.isFile = isFile;
+        this.recStatus = recStatus;
+    }
+
+    public Massage(Long id, String messageName, String sender, Date lastUpdated, Integer readed, Integer senderStatus, Integer newMsg, Integer isFile, Integer recStatus, String recipients) {
+        this.id = id;
+        this.messageName = messageName;
+        this.sender = sender;
+        this.lastUpdated = lastUpdated;
+        this.readed = readed;
+        this.senderStatus = senderStatus;
+        this.newMsg = newMsg;
+        this.isFile = isFile;
+        this.recStatus = recStatus;
+        this.recipients = recipients;
+    }
+
+    public Massage() {
+        super();
+    }
+
     public Long getId() {
         return id;
     }

@@ -11,6 +11,8 @@
         </plugin>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
         </plugin>
+<!--        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin">-->
+<!--    </plugin>-->
         <commentGenerator>
             <property name="suppressDate" value="true"/>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -20,6 +22,7 @@
                         connectionURL="jdbc:mysql://test.com:3306/test?serverTimezone=UTC"
                         userId="root"
                         password="sise">
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
 
@@ -28,6 +31,7 @@
         </javaTypeResolver>
 
         <javaModelGenerator targetPackage="com.example.email.entity" targetProject="src\main\java">
+            <property name="constructorBased" value="true"/>
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
@@ -40,17 +44,18 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="users" domainObjectName="Users" >
+        <table schema="root" tableName="users" domainObjectName="Users" >
         </table>
-        <table tableName="staff" domainObjectName="Staff" >
+        <table schema="root" tableName="position" domainObjectName="Position" >
         </table>
-        <table tableName="position" domainObjectName="Position" >
+        <table schema="root" tableName="staff" domainObjectName="Staff" >
+            <columnOverride column="img_url" jdbcType="VARCHAR"></columnOverride>
         </table>
-        <table tableName="message" domainObjectName="Massage" >
+        <table schema="root" tableName="message" domainObjectName="Massage" >
         </table>
-        <table tableName="dept" domainObjectName="Dept" >
+        <table schema="root" tableName="dept" domainObjectName="Dept" >
         </table>
-        <table tableName="authorrity" domainObjectName="Authorrity" >
+        <table schema="root" tableName="authorrity" domainObjectName="Authorrity" >
         </table>
     </context>
 </generatorConfiguration>

@@ -2,18 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.email.mapper.MassageMapper">
   <resultMap id="BaseResultMap" type="com.example.email.entity.Massage">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="message_name" jdbcType="VARCHAR" property="messageName" />
-    <result column="sender" jdbcType="VARCHAR" property="sender" />
-    <result column="last_updated" jdbcType="TIMESTAMP" property="lastUpdated" />
-    <result column="readed" jdbcType="INTEGER" property="readed" />
-    <result column="sender_status" jdbcType="INTEGER" property="senderStatus" />
-    <result column="new_msg" jdbcType="INTEGER" property="newMsg" />
-    <result column="is_file" jdbcType="INTEGER" property="isFile" />
-    <result column="rec__status" jdbcType="INTEGER" property="recStatus" />
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="message_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sender" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="last_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="readed" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sender_status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="new_msg" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="is_file" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="rec__status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.email.entity.Massage">
-    <result column="recipients" jdbcType="LONGVARCHAR" property="recipients" />
+  <resultMap id="ResultMapWithBLOBs" type="com.example.email.entity.Massage">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="message_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sender" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="last_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="readed" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sender_status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="new_msg" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="is_file" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="rec__status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="recipients" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

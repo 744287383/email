@@ -11,6 +11,17 @@ public class Authorrity {
 
     private Date modifyTime;
 
+    public Authorrity(Long authId, String authName, Date createTime, Date modifyTime) {
+        this.authId = authId;
+        this.authName = authName;
+        this.createTime = createTime;
+        this.modifyTime = modifyTime;
+    }
+
+    public Authorrity() {
+        super();
+    }
+
     public Long getAuthId() {
         return authId;
     }
