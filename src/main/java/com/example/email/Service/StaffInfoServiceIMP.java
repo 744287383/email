@@ -20,6 +20,28 @@ public class StaffInfoServiceIMP {
     private PositionMapper positionMapper;
     @Autowired
     private AuthorrityMapper authorrityMapper;
+    public StaffInfo getStaffInfoByToken(String token){
+        StaffInfo staffInfo=new StaffInfo();
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andTokenEqualTo(token);
+        List<Staff> staffs = staffMapper.selectByExample(staffExample);
+        if (null==staffs||0==staffs.size()){
+          return null;
+        }
+        Staff staff=staffs.get(0);
+        BeanUtils.copyProperties(staff,staffInfo);
+        Position position = getPositionById(staff.getPositionId());
+        if (null==position){
+            return staffInfo;
+        }
+        staffInfo.setPositions(position);
+        Authorrity authorrity = getAuthorrityByAuthID(position.getAuthId());
+        if (null==authorrity){
+            return staffInfo;
+        }
+        staffInfo.setAuthorrity(authorrity);
+        return staffInfo;
+    }
 
     public StaffInfo getStaffInfoByEmail(String email) {
         StaffInfo staffInfo = new StaffInfo();

@@ -54,8 +54,12 @@ public class LoginController {
         cookie.setMaxAge(60*60*24*7);
         response.addCookie(cookie);
         model.addAttribute("loginUser",loginUserInfo);
-        return "index";
+        return "redirect:/user/index";
 
+    }
+    @RequestMapping(value = "/user/index",method = RequestMethod.GET)
+    public String getindexview(){
+        return "write";
     }
 
 }
