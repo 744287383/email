@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MassageExample {
+public class MessageExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public MassageExample() {
+    public MessageExample() {
         oredCriteria = new ArrayList<>();
     }
 
@@ -302,6 +302,76 @@ public class MassageExample {
 
         public Criteria andSenderNotBetween(String value1, String value2) {
             addCriterion("sender not between", value1, value2, "sender");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIsNull() {
+            addCriterion("recipients is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIsNotNull() {
+            addCriterion("recipients is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsEqualTo(String value) {
+            addCriterion("recipients =", value, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsNotEqualTo(String value) {
+            addCriterion("recipients <>", value, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsGreaterThan(String value) {
+            addCriterion("recipients >", value, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsGreaterThanOrEqualTo(String value) {
+            addCriterion("recipients >=", value, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsLessThan(String value) {
+            addCriterion("recipients <", value, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsLessThanOrEqualTo(String value) {
+            addCriterion("recipients <=", value, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsLike(String value) {
+            addCriterion("recipients like", value, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsNotLike(String value) {
+            addCriterion("recipients not like", value, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIn(List<String> values) {
+            addCriterion("recipients in", values, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsNotIn(List<String> values) {
+            addCriterion("recipients not in", values, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsBetween(String value1, String value2) {
+            addCriterion("recipients between", value1, value2, "recipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsNotBetween(String value1, String value2) {
+            addCriterion("recipients not between", value1, value2, "recipients");
             return (Criteria) this;
         }
 

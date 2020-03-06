@@ -51,7 +51,8 @@
         <table schema="root" tableName="staff" domainObjectName="Staff" >
             <columnOverride column="img_url" jdbcType="VARCHAR"></columnOverride>
         </table>
-        <table schema="root" tableName="message" domainObjectName="Massage" >
+        <table schema="root" tableName="message" domainObjectName="Message" >
+            <columnOverride column="recipients" jdbcType="VARCHAR"></columnOverride>
         </table>
         <table schema="root" tableName="dept" domainObjectName="Dept" >
         </table>

@@ -2,7 +2,8 @@ package com.example.email.Service;
 
 import com.example.email.ModelDTO.LoginUser;
 import com.example.email.ModelDTO.StaffInfo;
-import com.example.email.entity.*;
+import com.example.email.entity.Staff;
+import com.example.email.entity.StaffExample;
 import com.example.email.mapper.AuthorrityMapper;
 import com.example.email.mapper.PositionMapper;
 import com.example.email.mapper.StaffMapper;

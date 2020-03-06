@@ -17,6 +17,7 @@ public class LoadLoginUserInfoInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         LoginUser user = (LoginUser) request.getSession().getAttribute("user");
+        if (null!=modelAndView)
         modelAndView.addObject("loginUser",user);
         response.addCookie(new Cookie("name","name"));
     }

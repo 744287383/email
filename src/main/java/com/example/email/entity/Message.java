@@ -2,12 +2,14 @@ package com.example.email.entity;
 
 import java.util.Date;
 
-public class Massage {
+public class Message {
     private Long id;
 
     private String messageName;
 
     private String sender;
+
+    private String recipients;
 
     private Date lastUpdated;
 
@@ -21,34 +23,20 @@ public class Massage {
 
     private Integer recStatus;
 
-    private String recipients;
-
-    public Massage(Long id, String messageName, String sender, Date lastUpdated, Integer readed, Integer senderStatus, Integer newMsg, Integer isFile, Integer recStatus) {
+    public Message(Long id, String messageName, String sender, String recipients, Date lastUpdated, Integer readed, Integer senderStatus, Integer newMsg, Integer isFile, Integer recStatus) {
         this.id = id;
         this.messageName = messageName;
         this.sender = sender;
-        this.lastUpdated = lastUpdated;
-        this.readed = readed;
-        this.senderStatus = senderStatus;
-        this.newMsg = newMsg;
-        this.isFile = isFile;
-        this.recStatus = recStatus;
-    }
-
-    public Massage(Long id, String messageName, String sender, Date lastUpdated, Integer readed, Integer senderStatus, Integer newMsg, Integer isFile, Integer recStatus, String recipients) {
-        this.id = id;
-        this.messageName = messageName;
-        this.sender = sender;
-        this.lastUpdated = lastUpdated;
-        this.readed = readed;
-        this.senderStatus = senderStatus;
-        this.newMsg = newMsg;
-        this.isFile = isFile;
-        this.recStatus = recStatus;
         this.recipients = recipients;
+        this.lastUpdated = lastUpdated;
+        this.readed = readed;
+        this.senderStatus = senderStatus;
+        this.newMsg = newMsg;
+        this.isFile = isFile;
+        this.recStatus = recStatus;
     }
 
-    public Massage() {
+    public Message() {
         super();
     }
 
@@ -74,6 +62,14 @@ public class Massage {
 
     public void setSender(String sender) {
         this.sender = sender == null ? null : sender.trim();
+    }
+
+    public String getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipients(String recipients) {
+        this.recipients = recipients == null ? null : recipients.trim();
     }
 
     public Date getLastUpdated() {
@@ -124,14 +120,6 @@ public class Massage {
         this.recStatus = recStatus;
     }
 
-    public String getRecipients() {
-        return recipients;
-    }
-
-    public void setRecipients(String recipients) {
-        this.recipients = recipients == null ? null : recipients.trim();
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -141,13 +129,13 @@ public class Massage {
         sb.append(", id=").append(id);
         sb.append(", messageName=").append(messageName);
         sb.append(", sender=").append(sender);
+        sb.append(", recipients=").append(recipients);
         sb.append(", lastUpdated=").append(lastUpdated);
         sb.append(", readed=").append(readed);
         sb.append(", senderStatus=").append(senderStatus);
         sb.append(", newMsg=").append(newMsg);
         sb.append(", isFile=").append(isFile);
         sb.append(", recStatus=").append(recStatus);
-        sb.append(", recipients=").append(recipients);
         sb.append("]");
         return sb.toString();
     }

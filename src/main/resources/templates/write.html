@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/css/demo.css">
     <link rel="stylesheet" href="/css/sidebar-menu.css">
     <script src="/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="/js/dropify.js"  type="text/javascript"></script>
     <style type="text/css">
         .main-sidebar {
             position: absolute;
@@ -27,6 +28,32 @@
         .text {
             border: 1px solid #ccc;
             height: 300px;
+        }
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
         }
     </style>
     <!--[if IE]>
@@ -114,7 +141,7 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱</span>
 <div style="display: inline">
     <div style="display: inline-block;width: 230px;"></div>
     <div style="display: inline-block;width: 1000px;padding: 25px;">
-        <form>
+        <form method="post" action="/user/emailsender" enctype="multipart/form-data">
         <blockquote style="border-left-color: #b8c7ce;border-bottom: 1px solid #b8c7ce;">
             <p style="color: black">写信</p>
         </blockquote>
@@ -125,16 +152,21 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱</span>
         <div>
             <label for="inputEmail3">收件人:</label>
             <div>
-                <input type="email" class="form-control" id="inputEmail3" placeholder="收件人地址">
+                <input type="email" class="form-control" id="inputEmail3" name="to" placeholder="收件人地址">
             </div>
         </div>
         <div >
             <label for="inputPassword3">主题:</label>
             <div>
-                <input type="text" class="form-control" id="inputPassword3" placeholder="主题">
+                <input type="text" class="form-control" id="inputPassword3" name="subject" placeholder="主题">
             </div>
         </div>
         </div>
+            <div>
+                <a href="javascript:;" class="file a-upload">选择附件
+                    <input type="file" name="file" id=""><span class="showFileName"></span>
+                </a>
+            </div>
 
 
         <div style="margin-top: 15px;">
@@ -143,7 +175,7 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱</span>
         <div style="padding: 5px 0; color: black">邮件内容:</div>
         <div id="div2" class="text"> <!--可使用 min-height 实现编辑区域自动增加高度-->
         </div>
-    <textarea  id="text1" style=" display:none;width:100%; height:200px;"></textarea>
+    <textarea  id="text1" style=" display:none;width:100%; height:200px;" name="text"></textarea>
             <button type="submit" class="btn btn-primary" style="position:relative;right:0px;margin-top: 10px;">发送</button>
 
     <script type="text/javascript" src="/js/wangEditor.js"></script>
@@ -174,6 +206,17 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱</span>
 <script src="/js/sidebar-menu.js"></script>
 <script>
     $.sidebarMenu($('.sidebar-menu'));
+    $(".a-upload").on("change","input[type='file']",function(){
+        var filePath=$(this).val();
+            var arr=filePath.split('\\');
+            var fileName=arr[arr.length-1];
+            if (fileName!=null){
+              fileName=":"+fileName
+            }
+            $(".showFileName").html(fileName);
+
+    })
 </script>
 </body>
+
 </html>

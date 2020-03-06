@@ -1,31 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.email.mapper.MassageMapper">
-  <resultMap id="BaseResultMap" type="com.example.email.entity.Massage">
+<mapper namespace="com.example.email.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.example.email.entity.Message">
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="message_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="sender" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="recipients" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="last_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="readed" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="sender_status" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="new_msg" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="is_file" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="rec__status" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.example.email.entity.Massage">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="message_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="sender" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="last_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="readed" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="sender_status" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="new_msg" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="is_file" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="rec__status" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="recipients" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -87,29 +74,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, message_name, sender, last_updated, readed, sender_status, new_msg, is_file, 
-    rec__status
+    id, message_name, sender, recipients, last_updated, readed, sender_status, new_msg, 
+    is_file, rec__status
   </sql>
-  <sql id="Blob_Column_List">
-    recipients
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.example.email.entity.MassageExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from message
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" parameterType="com.example.email.entity.MassageExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.example.email.entity.MessageExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -123,11 +91,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from message
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -135,23 +101,23 @@
     delete from message
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.example.email.entity.MassageExample">
+  <delete id="deleteByExample" parameterType="com.example.email.entity.MessageExample">
     delete from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.email.entity.Massage">
+  <insert id="insert" parameterType="com.example.email.entity.Message">
     insert into message (id, message_name, sender, 
-      last_updated, readed, sender_status, 
-      new_msg, is_file, rec__status, 
-      recipients)
+      recipients, last_updated, readed, 
+      sender_status, new_msg, is_file, 
+      rec__status)
     values (#{id,jdbcType=BIGINT}, #{messageName,jdbcType=VARCHAR}, #{sender,jdbcType=VARCHAR}, 
-      #{lastUpdated,jdbcType=TIMESTAMP}, #{readed,jdbcType=INTEGER}, #{senderStatus,jdbcType=INTEGER}, 
-      #{newMsg,jdbcType=INTEGER}, #{isFile,jdbcType=INTEGER}, #{recStatus,jdbcType=INTEGER}, 
-      #{recipients,jdbcType=LONGVARCHAR})
+      #{recipients,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{readed,jdbcType=INTEGER}, 
+      #{senderStatus,jdbcType=INTEGER}, #{newMsg,jdbcType=INTEGER}, #{isFile,jdbcType=INTEGER}, 
+      #{recStatus,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.email.entity.Massage">
+  <insert id="insertSelective" parameterType="com.example.email.entity.Message">
     insert into message
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -162,6 +128,9 @@
       </if>
       <if test="sender != null">
         sender,
+      </if>
+      <if test="recipients != null">
+        recipients,
       </if>
       <if test="lastUpdated != null">
         last_updated,
@@ -181,9 +150,6 @@
       <if test="recStatus != null">
         rec__status,
       </if>
-      <if test="recipients != null">
-        recipients,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -194,6 +160,9 @@
       </if>
       <if test="sender != null">
         #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="recipients != null">
+        #{recipients,jdbcType=VARCHAR},
       </if>
       <if test="lastUpdated != null">
         #{lastUpdated,jdbcType=TIMESTAMP},
@@ -213,12 +182,9 @@
       <if test="recStatus != null">
         #{recStatus,jdbcType=INTEGER},
       </if>
-      <if test="recipients != null">
-        #{recipients,jdbcType=LONGVARCHAR},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.example.email.entity.MassageExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.example.email.entity.MessageExample" resultType="java.lang.Long">
     select count(*) from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -235,6 +201,9 @@
       </if>
       <if test="record.sender != null">
         sender = #{record.sender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipients != null">
+        recipients = #{record.recipients,jdbcType=VARCHAR},
       </if>
       <if test="record.lastUpdated != null">
         last_updated = #{record.lastUpdated,jdbcType=TIMESTAMP},
@@ -254,26 +223,7 @@
       <if test="record.recStatus != null">
         rec__status = #{record.recStatus,jdbcType=INTEGER},
       </if>
-      <if test="record.recipients != null">
-        recipients = #{record.recipients,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update message
-    set id = #{record.id,jdbcType=BIGINT},
-      message_name = #{record.messageName,jdbcType=VARCHAR},
-      sender = #{record.sender,jdbcType=VARCHAR},
-      last_updated = #{record.lastUpdated,jdbcType=TIMESTAMP},
-      readed = #{record.readed,jdbcType=INTEGER},
-      sender_status = #{record.senderStatus,jdbcType=INTEGER},
-      new_msg = #{record.newMsg,jdbcType=INTEGER},
-      is_file = #{record.isFile,jdbcType=INTEGER},
-      rec__status = #{record.recStatus,jdbcType=INTEGER},
-      recipients = #{record.recipients,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -283,6 +233,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       message_name = #{record.messageName,jdbcType=VARCHAR},
       sender = #{record.sender,jdbcType=VARCHAR},
+      recipients = #{record.recipients,jdbcType=VARCHAR},
       last_updated = #{record.lastUpdated,jdbcType=TIMESTAMP},
       readed = #{record.readed,jdbcType=INTEGER},
       sender_status = #{record.senderStatus,jdbcType=INTEGER},
@@ -293,7 +244,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.email.entity.Massage">
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.email.entity.Message">
     update message
     <set>
       <if test="messageName != null">
@@ -301,6 +252,9 @@
       </if>
       <if test="sender != null">
         sender = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="recipients != null">
+        recipients = #{recipients,jdbcType=VARCHAR},
       </if>
       <if test="lastUpdated != null">
         last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
@@ -320,29 +274,14 @@
       <if test="recStatus != null">
         rec__status = #{recStatus,jdbcType=INTEGER},
       </if>
-      <if test="recipients != null">
-        recipients = #{recipients,jdbcType=LONGVARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.email.entity.Massage">
+  <update id="updateByPrimaryKey" parameterType="com.example.email.entity.Message">
     update message
     set message_name = #{messageName,jdbcType=VARCHAR},
       sender = #{sender,jdbcType=VARCHAR},
-      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
-      readed = #{readed,jdbcType=INTEGER},
-      sender_status = #{senderStatus,jdbcType=INTEGER},
-      new_msg = #{newMsg,jdbcType=INTEGER},
-      is_file = #{isFile,jdbcType=INTEGER},
-      rec__status = #{recStatus,jdbcType=INTEGER},
-      recipients = #{recipients,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.email.entity.Massage">
-    update message
-    set message_name = #{messageName,jdbcType=VARCHAR},
-      sender = #{sender,jdbcType=VARCHAR},
+      recipients = #{recipients,jdbcType=VARCHAR},
       last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
       readed = #{readed,jdbcType=INTEGER},
       sender_status = #{senderStatus,jdbcType=INTEGER},
@@ -351,23 +290,7 @@
       rec__status = #{recStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.example.email.entity.MassageExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from message
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExampleWithRowbounds" parameterType="com.example.email.entity.MassageExample" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.example.email.entity.MessageExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
