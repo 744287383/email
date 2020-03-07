@@ -3,6 +3,7 @@ package com.example.email.Service;
 import com.example.email.ModelDTO.LoginUser;
 import com.example.email.ModelDTO.MassageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -15,6 +16,7 @@ import java.util.Properties;
 
 @Service
 public class EmailSenderServiceIMP {
+    @Qualifier("addJavaMailSenderImpl")
     @Autowired
     private JavaMailSenderImpl javaMailSender;
 

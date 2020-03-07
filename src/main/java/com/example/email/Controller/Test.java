@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Test {
     @RequestMapping(value = "/test1")
     public String testView(){
-        return "test1";
+        return "recMessageList";
     }
 }
