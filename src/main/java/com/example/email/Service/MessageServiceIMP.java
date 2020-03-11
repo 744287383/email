@@ -71,6 +71,7 @@ public class MessageServiceIMP {
 
         PageHelper.startPage(indexPage, size);
         List<Message> messages = getUndeleteMessageListByDB(loginUser.getEmail());
+        PageInfo pageInfo = new PageInfo<>(messages,5);
         Map<String, MinMessageDTO> msgMap = getFloderMSG(loginUser);
         List<MinMessageDTO> collect=new ArrayList<>();
         if (null!=messages){
@@ -82,7 +83,7 @@ public class MessageServiceIMP {
             return minMessageDTO;
         }).collect(Collectors.toList());
         }
-        PageInfo<MinMessageDTO> pageInfo = new PageInfo<>(collect);
+       pageInfo.setList(collect);
 
 
         return pageInfo;
@@ -205,6 +206,38 @@ public class MessageServiceIMP {
     }
 
 
+    public void deleteMsgByMsgID(List<String> msgIdList,LoginUser loginUser) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andMessageNameIn(msgIdList).andRecipientsEqualTo(loginUser.getEmail());
+        Message message=new Message();
+        message.setRecStatus(RecStatus.DELETED.getStatus());
+        messageMapper.updateByExampleSelective(message,messageExample);
 
+    }
+    public void deletedMsgByMsgID(List<String> msgIdList,LoginUser loginUser) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andMessageNameIn(msgIdList).andRecipientsEqualTo(loginUser.getEmail());
+        Message message=new Message();
+        message.setRecStatus(RecStatus.DELETE_COMPLETELY.getStatus());
+        messageMapper.updateByExampleSelective(message,messageExample);
 
+    }
+
+    public void readedMsg(LoginUser user, List<String> msgIdList) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andMessageNameIn(msgIdList).andRecipientsEqualTo(user.getEmail());
+        Message message=new Message();
+       message.setNewMsg(NewMsgStatus.OLD_MSG.getStatus());
+       message.setReaded(ReadStatus.READED.getStatus());
+        messageMapper.updateByExampleSelective(message,messageExample);
+    }
+
+    public void readedAllMsg(LoginUser user) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andRecipientsEqualTo(user.getEmail());
+        Message message=new Message();
+        message.setNewMsg(NewMsgStatus.OLD_MSG.getStatus());
+        message.setReaded(ReadStatus.READED.getStatus());
+        messageMapper.updateByExampleSelective(message,messageExample);
+    }
 }

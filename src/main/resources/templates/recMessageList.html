@@ -30,6 +30,15 @@
             height: 100%;
 
         }
+        .div-testDialog {
+            width: 500px;
+            height: auto;
+            margin: 50px auto;
+        }
+
+        .div-testDialog button {
+            margin: 10px;
+        }
     </style>
     <!--[if IE]>
     <script src="/js/html5shiv.min.js"></script>
@@ -67,7 +76,7 @@
                     </a>
                 </li>
                 <li class="active">
-                    <a href="#">
+                    <a href="/user/recMsglist">
                         <i class="
 glyphicon glyphicon-inbox "></i></i> <span>收信箱</span>
                         <small class="label pull-right label-info">新</small>
@@ -124,7 +133,8 @@ glyphicon glyphicon-inbox "></i></i> <span>收信箱</span>
             <form name="demo" method="post">
                 <button class="btn btn-warning" onclick="deleteMsg()">删除</button>
                 <button class="btn btn-danger" onclick="deletedMsg()">彻底删除</button>
-                <button class="btn btn-info" onclick="readedMsg()">全部标记已读</button>
+                <button class="btn btn-info" onclick="readedMsg()">标记已读</button>
+                <button class="btn btn-info" onclick="readedMsgAll()">全部标记已读</button>
                 <table class="bTable table table-striped table-bordered table-hover table-condensed"
                        style="margin-top: 10px;">
                     <thead>
@@ -142,9 +152,9 @@ glyphicon glyphicon-inbox "></i></i> <span>收信箱</span>
                     <tbody>
 
 
-                    <tr th:each="msg:${pageList.list}">
+                    <tr th:each="msg:${pageList.getList()}">
                         <td><input type="checkbox" name="msgId"
-                                   style="width: 50px; margin-right: auto;margin-left: auto;"></td>
+                                   style="width: 50px; margin-right: auto;margin-left: auto;" th:value="${msg.messageName}"></td>
                         <td><span th:if="${msg.readed==0}" class="
 glyphicon glyphicon-envelope" aria-hidden="true"></span>
                             <span th:if="${msg.readed==1}" class="
@@ -161,9 +171,30 @@ glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
                     </tr>
 
                     </tbody>
+
                 </table>
+                <nav aria-label="Page navigation" >
+                    <ul class="pagination" style="display:block;width: auto;">
+                        <li th:if="${!pageList.isFirstPage}" >
+                            <a aria-label="Previous" th:href="@{/user/recMsglist(indexPage=1)}">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pageList.isHasPreviousPage()}" ><a th:href="@{/user/recMsglist(indexPage=${pageList.pageNum - 1})}">&lt;</a></li>
+
+                        <li th:each="num:${pageList.navigatepageNums}" th:class="${pageList.pageNum==num? 'active':''}"><a th:href="@{/user/recMsglist(indexPage=${num})}" ><span th:text="${num}"></span></a></li>
+
+                        <li th:if="${pageList.hasNextPage}"><a th:href="@{/user/recMsglist(indexPage=${pageList.pageNum + 1})}">&gt;</a></li>
+                        <li th:if="${!pageList.isLastPage}">
+                            <a  aria-label="Next" th:href="@{/user/recMsglist(indexPage=${pageList.pages})}">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </form>
         </div>
+        <div></div>
     </div>
 </div>
 
@@ -174,18 +205,52 @@ glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
     $.sidebarMenu($('.sidebar-menu'));
     // 删除邮件
     function deleteMsg() {
-        document.demo.action = "/user/deleteMsg";
-        document.demo.submit();
+        var msgId = document.getElementsByName("msgId");
+        for (var i = 0; i < msgId.length; i++) {
+            if(msgId[i].checked==true){
+                document.demo.action = "/user/deleteMsg";
+                document.demo.submit();
+                return ;
+            }
+        }
+        alert("请勾选后再操作");
+
     }
     // 彻底删除邮件
     function deletedMsg() {
-        document.demo.action = "/user/deletedMsg";
-        document.demo.submit();
+        var msgId = document.getElementsByName("msgId");
+        for (var i = 0; i < msgId.length; i++) {
+            if(msgId[i].checked==true){
+                document.demo.action = "/user/deletedMsg";
+                document.demo.submit();
+                return ;
+            }
+        }
+        alert("请勾选后再操作");
+
     }
     // 已读邮件
     function readedMsg() {
-        document.demo.action = "/user/readedAll";
-        document.demo.submit();
+        var msgId = document.getElementsByName("msgId");
+        for (var i = 0; i < msgId.length; i++) {
+            if(msgId[i].checked==true){
+                document.demo.action = "/user/readed";
+                document.demo.submit();
+                return ;
+            }
+        }
+        alert("请勾选后再操作");
+
+    }
+    // 已读邮件
+    function readedMsgAll() {
+
+                document.demo.action = "/user/readedAll";
+                document.demo.submit();
+
+
+
+
     }
     // 点击全选与全反选
     function setALLNo(e) {
