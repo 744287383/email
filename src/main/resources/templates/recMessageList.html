@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/demo.css">
     <link rel="stylesheet" href="/css/sidebar-menu.css">
+    <link rel="stylesheet" href="/css/simpleAlert.css">
+
     <script src="/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="/js/simpleAlert.js" type="text/javascript"></script>
     <style type="text/css">
         .main-sidebar {
             position: absolute;
@@ -131,10 +134,10 @@ glyphicon glyphicon-inbox "></i></i> <span>收信箱</span>
                 <p style="color: black">收信箱</p>
             </blockquote>
             <form name="demo" method="post">
-                <button class="btn btn-warning" onclick="deleteMsg()">删除</button>
-                <button class="btn btn-danger" onclick="deletedMsg()">彻底删除</button>
-                <button class="btn btn-info" onclick="readedMsg()">标记已读</button>
-                <button class="btn btn-info" onclick="readedMsgAll()">全部标记已读</button>
+                <button class="btn btn-warning" type="button" onclick="deleteMsg()">删除</button>
+                <button class="btn btn-danger" type="button" onclick="deletedMsg()">彻底删除</button>
+                <button class="btn btn-info" type="button" onclick="readedMsg()">标记已读</button>
+                <button class="btn btn-info" type="button" onclick="readedMsgAll()">全部标记已读</button>
                 <table class="bTable table table-striped table-bordered table-hover table-condensed"
                        style="margin-top: 10px;">
                     <thead>
@@ -192,6 +195,7 @@ glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
                         </li>
                     </ul>
                 </nav>
+                <input style="display: none;" name="indexPage" th:value="${pageList.pageNum}" />
             </form>
         </div>
         <div></div>
@@ -203,51 +207,115 @@ glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
 <script src="/js/sidebar-menu.js"></script>
 <script>
     $.sidebarMenu($('.sidebar-menu'));
+
     // 删除邮件
     function deleteMsg() {
         var msgId = document.getElementsByName("msgId");
         for (var i = 0; i < msgId.length; i++) {
             if(msgId[i].checked==true){
-                document.demo.action = "/user/deleteMsg";
-                document.demo.submit();
-                return ;
+                var dblChoseAlert = simpleAlert({
+                    "content": "是否删除邮件！",
+                    "buttons": {
+                        "确定": function () {
+
+                            dblChoseAlert.close();
+                            document.demo.action = "/user/deleteMsg";
+                            document.demo.submit();
+                            return true;
+                        },
+                        "取消": function () {
+
+                            dblChoseAlert.close();
+                            return false;
+                        }
+                    }
+                });
+
+                return false;
             }
         }
         alert("请勾选后再操作");
-
+        return false;
     }
     // 彻底删除邮件
     function deletedMsg() {
         var msgId = document.getElementsByName("msgId");
         for (var i = 0; i < msgId.length; i++) {
             if(msgId[i].checked==true){
-                document.demo.action = "/user/deletedMsg";
-                document.demo.submit();
-                return ;
+                var dblChoseAlert = simpleAlert({
+                    "content": "确定彻底删除邮件！",
+                    "buttons": {
+                        "确定": function () {
+
+                            dblChoseAlert.close();
+                            document.demo.action = "/user/deletedMsg";
+                            document.demo.submit();
+                            return true;
+                        },
+                        "取消": function () {
+                            dblChoseAlert.close();
+                            return false;
+                        }
+                    }
+                })
+
+
+                return false;
             }
         }
         alert("请勾选后再操作");
-
+        return  false;
     }
     // 已读邮件
     function readedMsg() {
         var msgId = document.getElementsByName("msgId");
         for (var i = 0; i < msgId.length; i++) {
             if(msgId[i].checked==true){
-                document.demo.action = "/user/readed";
-                document.demo.submit();
-                return ;
+                var dblChoseAlert = simpleAlert({
+                    "content": "是否确定标记已读？",
+                    "buttons": {
+                        "确定": function () {
+
+                            dblChoseAlert.close();
+                            document.demo.action = "/user/readed";
+                            document.demo.submit();
+                            return true;
+                        },
+                        "取消": function () {
+                            dblChoseAlert.close();
+                            return false;
+                        }
+                    }
+                })
+
+
+                return false;
             }
         }
         alert("请勾选后再操作");
-
+        return  false;
     }
     // 已读邮件
     function readedMsgAll() {
+        var dblChoseAlert = simpleAlert({
+            "content": "是否确定将全部邮件标记成已读！",
+            "buttons": {
+                "确定": function () {
 
-                document.demo.action = "/user/readedAll";
-                document.demo.submit();
+                    dblChoseAlert.close();
+                    document.demo.action = "/user/readedAll";
+                    document.demo.submit();
+                    return true;
+                },
+                "取消": function () {
+                    dblChoseAlert.close();
+                    return false;
+                }
+            }
+        })
 
+
+        return false;
 
 
 

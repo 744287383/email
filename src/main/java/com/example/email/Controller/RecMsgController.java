@@ -30,32 +30,36 @@ public class RecMsgController {
     }
     @RequestMapping(value = "/user/deleteMsg")
     public String deleteMsg(@RequestParam("msgId")List<String> msgIdList,
+                            @RequestParam("indexPage") int indexPage,
                             HttpSession session){
         LoginUser user = (LoginUser) session.getAttribute("user");
         messageServiceIMP.deleteMsgByMsgID(msgIdList,user);
-        return "redirect:/user/recMsglist";
+        return "redirect:/user/recMsglist?indexPage="+indexPage;
     }
 
     @RequestMapping(value = "/user/deletedMsg")
     public String deletedMsg(@RequestParam("msgId")List<String> msgIdList,
+                             @RequestParam("indexPage") int indexPage,
                             HttpSession session){
         LoginUser user = (LoginUser) session.getAttribute("user");
         messageServiceIMP.deletedMsgByMsgID(msgIdList,user);
-        return "redirect:/user/recMsglist";
+        return "redirect:/user/recMsglist?indexPage="+indexPage;
     }
 
     @RequestMapping(value = "/user/readed")
     public String  readed(@RequestParam("msgId")List<String> msgIdList,
+                          @RequestParam("indexPage") int indexPage,
                           HttpSession session){
         LoginUser user = (LoginUser) session.getAttribute("user");
         messageServiceIMP.readedMsg(user,msgIdList);
-        return "redirect:/user/recMsglist";
+        return "redirect:/user/recMsglist?indexPage="+indexPage;
     }
 
     @RequestMapping(value = "/user/readedAll")
-    public String  readedAll(HttpSession session){
+    public String  readedAll(HttpSession session,
+                             @RequestParam("indexPage") int indexPage){
         LoginUser user = (LoginUser) session.getAttribute("user");
         messageServiceIMP.readedAllMsg(user);
-        return "redirect:/user/recMsglist";
+        return "redirect:/user/recMsglist?indexPage="+indexPage;
     }
 }
