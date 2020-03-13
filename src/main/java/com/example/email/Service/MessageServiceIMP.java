@@ -4,10 +4,8 @@ import com.example.email.Enum.IsFileStatus;
 import com.example.email.Enum.NewMsgStatus;
 import com.example.email.Enum.ReadStatus;
 import com.example.email.Enum.RecStatus;
-import com.example.email.ModelDTO.LoginDTO;
 import com.example.email.ModelDTO.LoginUser;
 import com.example.email.ModelDTO.MinMessageDTO;
-import com.example.email.entity.Message;
 import com.example.email.entity.MessageExample;
 import com.example.email.mapper.MessageMapper;
 import com.github.pagehelper.PageHelper;
@@ -19,10 +17,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
+import com.example.email.entity.Message;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
-import java.beans.Beans;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -93,9 +92,10 @@ public class MessageServiceIMP {
 
         MessageExample messageExample = new MessageExample();
         messageExample.or().andRecipientsEqualTo(email).andRecStatusEqualTo(RecStatus.UNDELETE.getStatus());
+        messageExample.setOrderByClause("last_updated desc");
         List<Message> messages = messageMapper.selectByExample(messageExample);
         if (null == messages || 0 == messages.size()) {
-            return null;
+            return messages;
         }
         return messages;
     }
@@ -126,6 +126,7 @@ public class MessageServiceIMP {
             }, message -> {
                 MinMessageDTO minMessageDTO = new MinMessageDTO();
                 boolean status = false;
+
                 try {
                     status = isContainAttachment(message);
                 } catch (MessagingException e) {
@@ -133,16 +134,19 @@ public class MessageServiceIMP {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 if (status) {
                     minMessageDTO.setIsFileStatus(IsFileStatus.IS_FILE.getStatus());
                 } else {
                     minMessageDTO.setIsFileStatus(IsFileStatus.NO_FILE.getStatus());
                 }
+
                 try {
                     minMessageDTO.setSubject(message.getSubject());
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 }
+
                 try {
                     minMessageDTO.setSize(message.getSize());
                 } catch (MessagingException e) {
@@ -211,6 +215,8 @@ public class MessageServiceIMP {
         messageExample.or().andMessageNameIn(msgIdList).andRecipientsEqualTo(loginUser.getEmail());
         Message message=new Message();
         message.setRecStatus(RecStatus.DELETED.getStatus());
+        Date date=new Date(System.currentTimeMillis());
+        message.setDeleteTime(date);
         messageMapper.updateByExampleSelective(message,messageExample);
 
     }
@@ -219,6 +225,8 @@ public class MessageServiceIMP {
         messageExample.or().andMessageNameIn(msgIdList).andRecipientsEqualTo(loginUser.getEmail());
         Message message=new Message();
         message.setRecStatus(RecStatus.DELETE_COMPLETELY.getStatus());
+        Date date=new Date(System.currentTimeMillis());
+        message.setDeleteTime(date);
         messageMapper.updateByExampleSelective(message,messageExample);
 
     }
@@ -239,5 +247,58 @@ public class MessageServiceIMP {
         message.setNewMsg(NewMsgStatus.OLD_MSG.getStatus());
         message.setReaded(ReadStatus.READED.getStatus());
         messageMapper.updateByExampleSelective(message,messageExample);
+    }
+
+    public PageInfo<MinMessageDTO> getdeletedMsgList(int indexPage, int size, LoginUser loginUser) {
+        PageHelper.startPage(indexPage, size);
+        List<Message> messages = getdeletedMessageListByDB(loginUser.getEmail());
+        PageInfo pageInfo = new PageInfo<>(messages,5);
+        Map<String, MinMessageDTO> msgMap = getFloderMSG(loginUser);
+        List<MinMessageDTO> collect=new ArrayList<>();
+        if (null!=messages){
+
+            collect = messages.stream().map(message -> {
+                MinMessageDTO minMessageDTO = msgMap.get(message.getMessageName());
+                BeanUtils.copyProperties(message, minMessageDTO);
+
+                return minMessageDTO;
+            }).collect(Collectors.toList());
+        }
+        pageInfo.setList(collect);
+
+
+        return pageInfo;
+
+    }
+    private List<Message> getdeletedMessageListByDB(String email) {
+
+        MessageExample messageExample = new MessageExample();
+        messageExample.or().andRecipientsEqualTo(email).andRecStatusEqualTo(RecStatus.DELETED.getStatus());
+        List<Message> messages = messageMapper.selectByExample(messageExample);
+        return messages;
+    }
+
+    public void reductionMsg(LoginUser user, List<String> msgIdList) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andMessageNameIn(msgIdList).andRecipientsEqualTo(user.getEmail());
+        Message message=new Message();
+        message.setRecStatus(RecStatus.UNDELETE.getStatus());
+        messageMapper.updateByExampleSelective(message,messageExample);
+    }
+    public boolean isDeleteMSGPageNull(LoginUser user, int indexPage,int size){
+        PageHelper.startPage(indexPage, size);
+        List<Message> messages = getdeletedMessageListByDB(user.getEmail());
+        if (0==messages.size()){
+            return true;
+        }
+        return false;
+    }
+    public boolean isUndeleteMSGPageNull(LoginUser user, int indexPage,int size){
+        PageHelper.startPage(indexPage, size);
+        List<Message> messages = getUndeleteMessageListByDB(user.getEmail());
+        if (0==messages.size()){
+            return true;
+        }
+        return false;
     }
 }

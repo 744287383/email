@@ -23,7 +23,9 @@ public class Message {
 
     private Integer recStatus;
 
-    public Message(Long id, String messageName, String sender, String recipients, Date lastUpdated, Integer readed, Integer senderStatus, Integer newMsg, Integer isFile, Integer recStatus) {
+    private Date deleteTime;
+
+    public Message(Long id, String messageName, String sender, String recipients, Date lastUpdated, Integer readed, Integer senderStatus, Integer newMsg, Integer isFile, Integer recStatus, Date deleteTime) {
         this.id = id;
         this.messageName = messageName;
         this.sender = sender;
@@ -34,6 +36,7 @@ public class Message {
         this.newMsg = newMsg;
         this.isFile = isFile;
         this.recStatus = recStatus;
+        this.deleteTime = deleteTime;
     }
 
     public Message() {
@@ -120,6 +123,14 @@ public class Message {
         this.recStatus = recStatus;
     }
 
+    public Date getDeleteTime() {
+        return deleteTime;
+    }
+
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -136,6 +147,7 @@ public class Message {
         sb.append(", newMsg=").append(newMsg);
         sb.append(", isFile=").append(isFile);
         sb.append(", recStatus=").append(recStatus);
+        sb.append(", deleteTime=").append(deleteTime);
         sb.append("]");
         return sb.toString();
     }

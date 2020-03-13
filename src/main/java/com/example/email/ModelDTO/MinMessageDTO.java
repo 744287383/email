@@ -27,4 +27,5 @@ public class MinMessageDTO {
 
     private String subject;
     private int size;
+    private Date deleteTime;
 }

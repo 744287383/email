@@ -13,6 +13,7 @@
       <arg column="new_msg" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="is_file" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="rec__status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="delete_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, message_name, sender, recipients, last_updated, readed, sender_status, new_msg, 
-    is_file, rec__status
+    is_file, rec__status, delete_time
   </sql>
   <select id="selectByExample" parameterType="com.example.email.entity.MessageExample" resultMap="BaseResultMap">
     select
@@ -111,11 +112,11 @@
     insert into message (id, message_name, sender, 
       recipients, last_updated, readed, 
       sender_status, new_msg, is_file, 
-      rec__status)
+      rec__status, delete_time)
     values (#{id,jdbcType=BIGINT}, #{messageName,jdbcType=VARCHAR}, #{sender,jdbcType=VARCHAR}, 
       #{recipients,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{readed,jdbcType=INTEGER}, 
       #{senderStatus,jdbcType=INTEGER}, #{newMsg,jdbcType=INTEGER}, #{isFile,jdbcType=INTEGER}, 
-      #{recStatus,jdbcType=INTEGER})
+      #{recStatus,jdbcType=INTEGER}, #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.example.email.entity.Message">
     insert into message
@@ -150,6 +151,9 @@
       <if test="recStatus != null">
         rec__status,
       </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -181,6 +185,9 @@
       </if>
       <if test="recStatus != null">
         #{recStatus,jdbcType=INTEGER},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -223,6 +230,9 @@
       <if test="record.recStatus != null">
         rec__status = #{record.recStatus,jdbcType=INTEGER},
       </if>
+      <if test="record.deleteTime != null">
+        delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -239,7 +249,8 @@
       sender_status = #{record.senderStatus,jdbcType=INTEGER},
       new_msg = #{record.newMsg,jdbcType=INTEGER},
       is_file = #{record.isFile,jdbcType=INTEGER},
-      rec__status = #{record.recStatus,jdbcType=INTEGER}
+      rec__status = #{record.recStatus,jdbcType=INTEGER},
+      delete_time = #{record.deleteTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -274,6 +285,9 @@
       <if test="recStatus != null">
         rec__status = #{recStatus,jdbcType=INTEGER},
       </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -287,7 +301,8 @@
       sender_status = #{senderStatus,jdbcType=INTEGER},
       new_msg = #{newMsg,jdbcType=INTEGER},
       is_file = #{isFile,jdbcType=INTEGER},
-      rec__status = #{recStatus,jdbcType=INTEGER}
+      rec__status = #{recStatus,jdbcType=INTEGER},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.example.email.entity.MessageExample" resultMap="BaseResultMap">
