@@ -114,4 +114,28 @@ public class RecMsgController {
         }
         return "redirect:/user/deletedMsgListView?indexPage="+indexPage;
     }
+
+    @RequestMapping(value = "/user/recordSenderMsgView")
+    public String recordSenderMsgView(@RequestParam(required = false,value = "indexPage",defaultValue = "1")int indexPage,
+                             HttpSession session, Model model){
+        LoginUser loginUser = (LoginUser) session.getAttribute("user");
+        PageInfo<MinMessageDTO> pageList = messageServiceIMP.recordSenderMsg(indexPage, size, loginUser);
+        model.addAttribute("pageList",pageList);
+        model.addAttribute("listmsg",pageList.getList());
+        return "recordSenderMsg";
+    }
+
+    @RequestMapping(value = "/user/cleanSenderRecord")
+    public String  cleanSenderRecord(@RequestParam("msgId")List<String> msgIdList,
+                                     @RequestParam("indexPage") int indexPage,
+                                     HttpSession session){
+        LoginUser user = (LoginUser) session.getAttribute("user");
+        messageServiceIMP.cleanSenderMSgRecord(msgIdList,user);
+        boolean deleteMSGPageNull = messageServiceIMP.isSenderMSgRecordNull(user, indexPage, size);
+        if (deleteMSGPageNull){
+            if (indexPage>1)
+                indexPage=indexPage-1;
+        }
+        return "redirect:/user/deletedMsgListView?indexPage="+indexPage;
+    }
 }

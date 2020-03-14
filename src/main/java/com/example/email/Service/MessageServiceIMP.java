@@ -1,13 +1,13 @@
 package com.example.email.Service;
 
-import com.example.email.Enum.IsFileStatus;
-import com.example.email.Enum.NewMsgStatus;
-import com.example.email.Enum.ReadStatus;
-import com.example.email.Enum.RecStatus;
+import com.example.email.Enum.*;
 import com.example.email.ModelDTO.LoginUser;
 import com.example.email.ModelDTO.MinMessageDTO;
 import com.example.email.entity.MessageExample;
+import com.example.email.entity.Staff;
+import com.example.email.entity.StaffExample;
 import com.example.email.mapper.MessageMapper;
+import com.example.email.mapper.StaffMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.mail.pop3.POP3Folder;
@@ -37,6 +37,8 @@ public class MessageServiceIMP {
     private JavaMailSenderImpl javaMailSenderImpl;
     @Value("${spring.mail.host}")
     private String host;
+    @Autowired
+    private StaffMapper staffMapper;
 
     public long getUserALLMessageCount(LoginUser loginUser) {
         MessageExample messageExample = new MessageExample();
@@ -71,7 +73,7 @@ public class MessageServiceIMP {
         PageHelper.startPage(indexPage, size);
         List<Message> messages = getUndeleteMessageListByDB(loginUser.getEmail());
         PageInfo pageInfo = new PageInfo<>(messages,5);
-        Map<String, MinMessageDTO> msgMap = getFloderMSG(loginUser);
+        Map<String, MinMessageDTO> msgMap = getFloderMSG(loginUser.getUserName(),loginUser.getEmailPassword());
         List<MinMessageDTO> collect=new ArrayList<>();
         if (null!=messages){
 
@@ -100,15 +102,15 @@ public class MessageServiceIMP {
         return messages;
     }
 
-    private Map<String, MinMessageDTO> getFloderMSG(LoginUser loginUser)  {
-        javaMailSenderImpl.setUsername(loginUser.getUserName());
-        javaMailSenderImpl.setPassword(loginUser.getEmailPassword());
+    private Map<String, MinMessageDTO> getFloderMSG(String username,String emailpassword)  {
+        javaMailSenderImpl.setUsername(username);
+        javaMailSenderImpl.setPassword(emailpassword);
         Session session = javaMailSenderImpl.getSession();
         POP3Folder folder = null;
         Store pop3 = null;
         try {
             pop3 = session.getStore("pop3");
-            pop3.connect(host, loginUser.getUserName(), loginUser.getEmailPassword());
+            pop3.connect(host, username, emailpassword);
             folder = (POP3Folder) pop3.getFolder("INBOX");
             folder.open(Folder.READ_WRITE);
             javax.mail.Message[] messages = folder.getMessages();
@@ -253,7 +255,7 @@ public class MessageServiceIMP {
         PageHelper.startPage(indexPage, size);
         List<Message> messages = getdeletedMessageListByDB(loginUser.getEmail());
         PageInfo pageInfo = new PageInfo<>(messages,5);
-        Map<String, MinMessageDTO> msgMap = getFloderMSG(loginUser);
+        Map<String, MinMessageDTO> msgMap = getFloderMSG(loginUser.getUserName(),loginUser.getEmailPassword());
         List<MinMessageDTO> collect=new ArrayList<>();
         if (null!=messages){
 
@@ -300,5 +302,85 @@ public class MessageServiceIMP {
             return true;
         }
         return false;
+    }
+
+    public PageInfo<MinMessageDTO> recordSenderMsg(int indexPage, int size, LoginUser loginUser) {
+        PageHelper.startPage(indexPage, size);
+        List<Message> messages = getSenderRecordMsgListByDB(loginUser.getEmail());
+        PageInfo pageInfo = new PageInfo<>(messages,5);
+        Set<String> recList = messages.stream().map(message -> {
+                    String recipients = message.getRecipients();
+                    String username=recipients.split("@")[0];
+                    return username;
+                }
+                ).collect(Collectors.toSet());
+
+        Map<String, MinMessageDTO> msgMap = getFloderMSG(recList);
+        List<MinMessageDTO> collect=new ArrayList<>();
+        if (null!=messages){
+
+            collect = messages.stream().map(message -> {
+                MinMessageDTO minMessageDTO = msgMap.get(message.getMessageName());
+                BeanUtils.copyProperties(message, minMessageDTO);
+
+                return minMessageDTO;
+            }).collect(Collectors.toList());
+        }
+        pageInfo.setList(collect);
+
+
+        return pageInfo;
+    }
+    private List<Message> getSenderRecordMsgListByDB(String email) {
+
+        MessageExample messageExample = new MessageExample();
+        messageExample.or().andSenderEqualTo(email).andRecStatusEqualTo(SenderStatus.UNCLEAN.getStatus());
+        messageExample.setOrderByClause("last_updated desc");
+        List<Message> messages = messageMapper.selectByExample(messageExample);
+        if (null == messages || 0 == messages.size()) {
+            return messages;
+        }
+        return messages;
+    }
+
+    private Map<String, MinMessageDTO> getFloderMSG(Set<String> list)  {
+        Map<String, MinMessageDTO> minMessageDTOMap=new HashMap<>();
+        for (String username:list){
+            String eamilPassword = getEamilPassword(username);
+            Map<String, MinMessageDTO> floderMSG = getFloderMSG(username, eamilPassword);
+            minMessageDTOMap.putAll(floderMSG);
+
+        }
+        return minMessageDTOMap;
+
+    }
+
+    private String getEamilPassword(String username){
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andUserNameEqualTo(username);
+        List<Staff> staff = staffMapper.selectByExample(staffExample);
+        if (0==staff.size()){
+            return "";
+        }
+        return staff.get(0).getEmailPassword();
+    }
+
+    public void cleanSenderMSgRecord(List<String> msgIdList, LoginUser user) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andMessageNameIn(msgIdList).andSenderEqualTo(user.getEmail());
+        Message message=new Message();
+        message.setSenderStatus(SenderStatus.CLEAN.getStatus());
+        messageMapper.updateByExampleSelective(message,messageExample);
+    }
+
+    public boolean isSenderMSgRecordNull(LoginUser user, int indexPage, int size) {
+        PageHelper.startPage(indexPage, size);
+        List<Message> messages = getSenderRecordMsgListByDB(user.getEmail());
+        if (0==messages.size()){
+            return true;
+        }else
+        {
+            return false;
+        }
     }
 }
