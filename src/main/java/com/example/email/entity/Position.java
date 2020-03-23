@@ -13,12 +13,15 @@ public class Position {
 
     private Long authId;
 
-    public Position(Long positionId, String positionName, Date createTime, Date modifyTime, Long authId) {
+    private Long deptNo;
+
+    public Position(Long positionId, String positionName, Date createTime, Date modifyTime, Long authId, Long deptNo) {
         this.positionId = positionId;
         this.positionName = positionName;
         this.createTime = createTime;
         this.modifyTime = modifyTime;
         this.authId = authId;
+        this.deptNo = deptNo;
     }
 
     public Position() {
@@ -65,6 +68,14 @@ public class Position {
         this.authId = authId;
     }
 
+    public Long getDeptNo() {
+        return deptNo;
+    }
+
+    public void setDeptNo(Long deptNo) {
+        this.deptNo = deptNo;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -76,6 +87,7 @@ public class Position {
         sb.append(", createTime=").append(createTime);
         sb.append(", modifyTime=").append(modifyTime);
         sb.append(", authId=").append(authId);
+        sb.append(", deptNo=").append(deptNo);
         sb.append("]");
         return sb.toString();
     }

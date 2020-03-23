@@ -8,6 +8,7 @@
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="modify_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="auth_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="dept_no" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    position_id, position_name, create_time, modify_time, auth_id
+    position_id, position_name, create_time, modify_time, auth_id, dept_no
   </sql>
   <select id="selectByExample" parameterType="com.example.email.entity.PositionExample" resultMap="BaseResultMap">
     select
@@ -103,9 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.example.email.entity.Position">
     insert into position (position_id, position_name, create_time, 
-      modify_time, auth_id)
+      modify_time, auth_id, dept_no
+      )
     values (#{positionId,jdbcType=BIGINT}, #{positionName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifyTime,jdbcType=TIMESTAMP}, #{authId,jdbcType=BIGINT})
+      #{modifyTime,jdbcType=TIMESTAMP}, #{authId,jdbcType=BIGINT}, #{deptNo,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.email.entity.Position">
     insert into position
@@ -125,6 +128,9 @@
       <if test="authId != null">
         auth_id,
       </if>
+      <if test="deptNo != null">
+        dept_no,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="positionId != null">
@@ -141,6 +147,9 @@
       </if>
       <if test="authId != null">
         #{authId,jdbcType=BIGINT},
+      </if>
+      <if test="deptNo != null">
+        #{deptNo,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -168,6 +177,9 @@
       <if test="record.authId != null">
         auth_id = #{record.authId,jdbcType=BIGINT},
       </if>
+      <if test="record.deptNo != null">
+        dept_no = #{record.deptNo,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -179,7 +191,8 @@
       position_name = #{record.positionName,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
-      auth_id = #{record.authId,jdbcType=BIGINT}
+      auth_id = #{record.authId,jdbcType=BIGINT},
+      dept_no = #{record.deptNo,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -199,6 +212,9 @@
       <if test="authId != null">
         auth_id = #{authId,jdbcType=BIGINT},
       </if>
+      <if test="deptNo != null">
+        dept_no = #{deptNo,jdbcType=BIGINT},
+      </if>
     </set>
     where position_id = #{positionId,jdbcType=BIGINT}
   </update>
@@ -207,7 +223,8 @@
     set position_name = #{positionName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-      auth_id = #{authId,jdbcType=BIGINT}
+      auth_id = #{authId,jdbcType=BIGINT},
+      dept_no = #{deptNo,jdbcType=BIGINT}
     where position_id = #{positionId,jdbcType=BIGINT}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.example.email.entity.PositionExample" resultMap="BaseResultMap">

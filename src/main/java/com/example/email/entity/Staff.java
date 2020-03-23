@@ -21,9 +21,9 @@ public class Staff {
 
     private Long positionId;
 
-    private String imgUrl;
-
     private String cardNo;
+
+    private String imgUrl;
 
     private String qq;
 
@@ -35,7 +35,7 @@ public class Staff {
 
     private String token;
 
-    public Staff(Long id, String userName, String loginPassword, String email, String emailPassword, Date startTime, Date loginTime, String nameall, Long positionId, String imgUrl, String cardNo, String qq, String wechatNo, String cellPhone, Long deptNo, String token) {
+    public Staff(Long id, String userName, String loginPassword, String email, String emailPassword, Date startTime, Date loginTime, String nameall, Long positionId, String cardNo, String imgUrl, String qq, String wechatNo, String cellPhone, Long deptNo, String token) {
         this.id = id;
         this.userName = userName;
         this.loginPassword = loginPassword;
@@ -45,8 +45,8 @@ public class Staff {
         this.loginTime = loginTime;
         this.nameall = nameall;
         this.positionId = positionId;
-        this.imgUrl = imgUrl;
         this.cardNo = cardNo;
+        this.imgUrl = imgUrl;
         this.qq = qq;
         this.wechatNo = wechatNo;
         this.cellPhone = cellPhone;
@@ -130,20 +130,20 @@ public class Staff {
         this.positionId = positionId;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
-    }
-
     public String getCardNo() {
         return cardNo;
     }
 
     public void setCardNo(String cardNo) {
         this.cardNo = cardNo == null ? null : cardNo.trim();
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 
     public String getQq() {
@@ -201,8 +201,8 @@ public class Staff {
         sb.append(", loginTime=").append(loginTime);
         sb.append(", nameall=").append(nameall);
         sb.append(", positionId=").append(positionId);
-        sb.append(", imgUrl=").append(imgUrl);
         sb.append(", cardNo=").append(cardNo);
+        sb.append(", imgUrl=").append(imgUrl);
         sb.append(", qq=").append(qq);
         sb.append(", wechatNo=").append(wechatNo);
         sb.append(", cellPhone=").append(cellPhone);

@@ -85,7 +85,7 @@ glyphicon glyphicon-inbox "></i></i> <span>收信箱</span>
                     </a>
                 </li>
 
-                <li>
+                <li class="active">
                     <a href="/user/getDraftListView">
                         <i class="glyphicon glyphicon-edit"></i></i> <span>草稿箱</span>
                         <small class="label pull-right label-danger">3</small>
@@ -94,10 +94,10 @@ glyphicon glyphicon-inbox "></i></i> <span>收信箱</span>
                 <li>
                     <a href="/user/recordSenderMsgView">
                         <i class="fa fa-envelope"></i> <span>已发送邮件</span>
-                        <small class="label pull-right label-warning">12</small>
+
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="/user/deletedMsgListView" >
                         <i class="glyphicon glyphicon-trash"></i> <span>邮件回收站</span>
                     </a>
@@ -129,42 +129,34 @@ glyphicon glyphicon-inbox "></i></i> <span>收信箱</span>
     <div style="display: inline-block;width: auto;color: black; min-width: 1200px;max-width: 1200px;">
         <div style="margin-top: 20px;margin-left: 20px;">
             <blockquote style="border-left-color: #b8c7ce;border-bottom: 1px solid #b8c7ce;">
-                <p style="color: black">邮件回收站</p>
+                <p style="color: black">草稿箱</p>
             </blockquote>
             <form name="demo" method="post">
-                <button class="btn btn-info" type="button" onclick="reductionMsg()">还原</button>
-                <button class="btn btn-danger" type="button" onclick="deletedMsg()">彻底删除</button>
+
                 <table class="bTable table table-striped table-bordered table-hover table-condensed"
                        style="margin-top: 10px;">
                     <thead>
                     <tr>
-                        <th class="selectColumn" style="width: 35px;"><input type="checkbox" onclick="setALLNo(this)"
-                                                        style="display: block; margin-right: auto;margin-left: auto;"></th>
-                        <th style="width: 50px;">状态</th>
-                        <th style="width: 50px;">附件</th>
-                        <th style="width: 200px;">发件人</th>
+
+                        <th style="width: 50px;"> </th>
+                        <th style="width: 200px;">收件人</th>
                         <th style="width: 500px;">主题</th>
-                        <th style="width: 100px;">大小</th>
-                        <th style="width: 200px;">删除时间</th>
+                        <th style="width: 200px;">保存时间</th>
+                        <th style="width: 120px;">操作</th>
                     </tr>
                     </thead>
                     <tbody>
 
 
-                    <tr th:each="msg:${pageList.getList()}">
-                        <td><input type="checkbox" name="msgId"
-                                   style="display: block; margin-right: auto;margin-left: auto;" th:value="${msg.messageName}"></td>
-                        <td><span th:if="${msg.readed==0}" class="
-glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                            <span th:if="${msg.readed==1}" class="
-glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-                        </td>
-                        <td><span th:if="${msg.isFileStatus==1}" class="
-glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
-                        <td><span th:text="${msg.sender}"></span></td>
-                        <td><div th:text="${msg.subject}" style="width:460px; overflow: hidden;white-space: nowrap;text-overflow:ellipsis;"></div></td>
-                        <td ><span th:text="${msg.size}"></span>kb</td>
-                        <td><span th:text="${#dates.format(msg.deleteTime, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
+                    <tr th:each="msg,iterStat:${pageList.getList()}">
+                        <td><span th:text="${iterStat.count}"></span></td>
+                        <td><span th:text="${msg.recipients}"></span></td>
+                        <td><div th:text="${msg.subjects}" style="width:460px; overflow: hidden;white-space: nowrap;text-overflow:ellipsis;"></div></td>
+                        <td><span th:text="${#dates.format(msg.createTime, 'yyyy-MM-dd HH:mm:ss')}" ></span></td>
+                        <td ><div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default">编辑</button>
+                            <button type="button" class="btn btn-default" th:onclick="'javascript:deleteDraft('+${msg.id}+')'">删除</button>
+                        </div></td>
 
 
                     </tr>
@@ -175,17 +167,17 @@ glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
                 <nav aria-label="Page navigation" >
                     <ul class="pagination" style="display:block;width: auto;">
                         <li th:if="${!pageList.isFirstPage}" >
-                            <a aria-label="Previous" th:href="@{/user/deletedMsgListView(indexPage=1)}">
+                            <a aria-label="Previous" th:href="@{/user/getDraftListView(indexPage=1)}">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li th:if="${pageList.isHasPreviousPage()}" ><a th:href="@{/user/deletedMsgListView(indexPage=${pageList.pageNum - 1})}">&lt;</a></li>
+                        <li th:if="${pageList.isHasPreviousPage()}" ><a th:href="@{/user/getDraftListView(indexPage=${pageList.pageNum - 1})}">&lt;</a></li>
 
-                        <li th:each="num:${pageList.navigatepageNums}" th:class="${pageList.pageNum==num? 'active':''}"><a th:href="@{/user/deletedMsgListView(indexPage=${num})}" ><span th:text="${num}"></span></a></li>
+                        <li th:each="num:${pageList.navigatepageNums}" th:class="${pageList.pageNum==num? 'active':''}"><a th:href="@{/user/getDraftListView(indexPage=${num})}" ><span th:text="${num}"></span></a></li>
 
-                        <li th:if="${pageList.hasNextPage}"><a th:href="@{/user/deletedMsgListView(indexPage=${pageList.pageNum + 1})}">&gt;</a></li>
+                        <li th:if="${pageList.hasNextPage}"><a th:href="@{/user/getDraftListView(indexPage=${pageList.pageNum + 1})}">&gt;</a></li>
                         <li th:if="${!pageList.isLastPage}">
-                            <a  aria-label="Next" th:href="@{/user/deletedMsgListView(indexPage=${pageList.pages})}">
+                            <a  aria-label="Next" th:href="@{/user/getDraftListView(indexPage=${pageList.pages})}">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -205,81 +197,26 @@ glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
     $.sidebarMenu($('.sidebar-menu'));
 
 
-    function reductionMsg() {
-        var msgId = document.getElementsByName("msgId");
-        for (var i = 0; i < msgId.length; i++) {
-            if(msgId[i].checked==true){
-                var dblChoseAlert = simpleAlert({
-                    "content": "是否还原选中的邮件到收信箱！",
-                    "buttons": {
-                        "确定": function () {
+    function deleteDraft(did) {
+        var dblChoseAlert = simpleAlert({
+            "content": "是否删除该草稿！",
+            "buttons": {
+                "确定": function () {
+                    $.ajax({url:"/user/deleteDraft?id="+did,success:function(result){
+                            window.location.reload();
+                        }});
 
-                            dblChoseAlert.close();
-                            document.demo.action = "/user/reductionMsg";
-                            document.demo.submit();
-                            return true;
-                        },
-                        "取消": function () {
+                },
+                "取消": function () {
 
-                            dblChoseAlert.close();
-                            return false;
-                        }
-                    }
-                });
-
-                return false;
+                    dblChoseAlert.close();
+                    return false;
+                }
             }
-        }
-        alert("请勾选后再操作");
-        return false;
+        });
+
+
     }
-    // 彻底删除邮件
-    function deletedMsg() {
-        var msgId = document.getElementsByName("msgId");
-        for (var i = 0; i < msgId.length; i++) {
-            if(msgId[i].checked==true){
-                var dblChoseAlert = simpleAlert({
-                    "content": "确定彻底删除邮件！",
-                    "buttons": {
-                        "确定": function () {
-
-                            dblChoseAlert.close();
-                            document.demo.action = "/user/deletedMsg";
-                            document.demo.submit();
-                            return true;
-                        },
-                        "取消": function () {
-                            dblChoseAlert.close();
-                            return false;
-                        }
-                    }
-                })
-
-
-                return false;
-            }
-        }
-        alert("请勾选后再操作");
-        return  false;
-    }
-
-    // 点击全选与全反选
-    function setALLNo(e) {
-        var box = e;
-        var msgId = document.getElementsByName("msgId");
-        if (box.checked == false) {
-            for (var i = 0; i < msgId.length; i++) {
-                msgId[i].checked = false;
-            }
-        } else {
-            for (var i = 0; i < msgId.length; i++) {
-                msgId[i].checked = true;
-            }
-        }
-    }
-
-
-
 </script>
 </body>
 </html>

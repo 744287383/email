@@ -414,6 +414,66 @@ public class PositionExample {
             addCriterion("auth_id not between", value1, value2, "authId");
             return (Criteria) this;
         }
+
+        public Criteria andDeptNoIsNull() {
+            addCriterion("dept_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoIsNotNull() {
+            addCriterion("dept_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoEqualTo(Long value) {
+            addCriterion("dept_no =", value, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoNotEqualTo(Long value) {
+            addCriterion("dept_no <>", value, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoGreaterThan(Long value) {
+            addCriterion("dept_no >", value, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoGreaterThanOrEqualTo(Long value) {
+            addCriterion("dept_no >=", value, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoLessThan(Long value) {
+            addCriterion("dept_no <", value, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoLessThanOrEqualTo(Long value) {
+            addCriterion("dept_no <=", value, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoIn(List<Long> values) {
+            addCriterion("dept_no in", values, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoNotIn(List<Long> values) {
+            addCriterion("dept_no not in", values, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoBetween(Long value1, Long value2) {
+            addCriterion("dept_no between", value1, value2, "deptNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptNoNotBetween(Long value1, Long value2) {
+            addCriterion("dept_no not between", value1, value2, "deptNo");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

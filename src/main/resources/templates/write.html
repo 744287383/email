@@ -106,7 +106,7 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱</span>
             </li>
 
             <li>
-                <a href="#">
+                <a href="/user/getDraftListView">
                     <i class="glyphicon glyphicon-edit"></i></i> <span>草稿箱</span>
                     <small class="label pull-right label-danger">3</small>
                 </a>
@@ -148,7 +148,7 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱</span>
 <div style="display: inline">
     <div style="display: inline-block;width: 230px;"></div>
     <div style="display: inline-block;width: 1000px;padding: 25px;">
-        <form method="post" action="/user/emailsender" enctype="multipart/form-data">
+        <form name="msg" method="post"  enctype="multipart/form-data">
         <blockquote style="border-left-color: #b8c7ce;border-bottom: 1px solid #b8c7ce;">
             <p style="color: black">写信</p>
         </blockquote>
@@ -183,7 +183,7 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱</span>
         <div id="div2" class="text"> <!--可使用 min-height 实现编辑区域自动增加高度-->
         </div>
     <textarea  id="text1" style=" display:none;width:100%; height:200px;" name="text"></textarea>
-            <button type="submit" class="btn btn-primary" style="position:relative;right:0px;margin-top: 10px;">发送</button>
+            <button type="button" class="btn btn-primary" onclick="sender()"  style="position:relative;right:0px;margin-top: 10px;">发送</button><button type="button" class="btn btn-primary" onclick="draft()" style="position:relative;right:0px;margin-top: 10px;">存为草稿</button>
 
     <script type="text/javascript" src="/js/wangEditor.js"></script>
     <script type="text/javascript">
@@ -223,6 +223,17 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱</span>
             $(".showFileName").html(fileName);
 
     })
+
+    function sender() {
+        document.msg.action="/user/emailsender";
+        document.msg.submit();
+
+    }
+    function draft() {
+        document.msg.action="/user/setDraft";
+        document.msg.submit();
+
+    }
 </script>
 </body>
 

@@ -12,8 +12,8 @@
       <arg column="login_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="nameall" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="position_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="img_url" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="card_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="img_url" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="QQ" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="wechat_no" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="cell_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -81,7 +81,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_name, login_password, email, email_password, start_time, login_time, nameall, 
-    position_id, img_url, card_no, QQ, wechat_no, cell_phone, dept_no, token
+    position_id, card_no, img_url, QQ, wechat_no, cell_phone, dept_no, token
   </sql>
   <select id="selectByExample" parameterType="com.example.email.entity.StaffExample" resultMap="BaseResultMap">
     select
@@ -117,13 +117,13 @@
     insert into staff (id, user_name, login_password, 
       email, email_password, start_time, 
       login_time, nameall, position_id, 
-      img_url, card_no, QQ, 
+      card_no, img_url, QQ, 
       wechat_no, cell_phone, dept_no, 
       token)
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{emailPassword,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
       #{loginTime,jdbcType=TIMESTAMP}, #{nameall,jdbcType=VARCHAR}, #{positionId,jdbcType=BIGINT}, 
-      #{imgUrl,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
+      #{cardNo,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
       #{wechatNo,jdbcType=VARCHAR}, #{cellPhone,jdbcType=VARCHAR}, #{deptNo,jdbcType=BIGINT}, 
       #{token,jdbcType=VARCHAR})
   </insert>
@@ -157,11 +157,11 @@
       <if test="positionId != null">
         position_id,
       </if>
-      <if test="imgUrl != null">
-        img_url,
-      </if>
       <if test="cardNo != null">
         card_no,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
       </if>
       <if test="qq != null">
         QQ,
@@ -207,11 +207,11 @@
       <if test="positionId != null">
         #{positionId,jdbcType=BIGINT},
       </if>
-      <if test="imgUrl != null">
-        #{imgUrl,jdbcType=VARCHAR},
-      </if>
       <if test="cardNo != null">
         #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
       </if>
       <if test="qq != null">
         #{qq,jdbcType=VARCHAR},
@@ -266,11 +266,11 @@
       <if test="record.positionId != null">
         position_id = #{record.positionId,jdbcType=BIGINT},
       </if>
-      <if test="record.imgUrl != null">
-        img_url = #{record.imgUrl,jdbcType=VARCHAR},
-      </if>
       <if test="record.cardNo != null">
         card_no = #{record.cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgUrl != null">
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.qq != null">
         QQ = #{record.qq,jdbcType=VARCHAR},
@@ -303,8 +303,8 @@
       login_time = #{record.loginTime,jdbcType=TIMESTAMP},
       nameall = #{record.nameall,jdbcType=VARCHAR},
       position_id = #{record.positionId,jdbcType=BIGINT},
-      img_url = #{record.imgUrl,jdbcType=VARCHAR},
       card_no = #{record.cardNo,jdbcType=VARCHAR},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
       QQ = #{record.qq,jdbcType=VARCHAR},
       wechat_no = #{record.wechatNo,jdbcType=VARCHAR},
       cell_phone = #{record.cellPhone,jdbcType=VARCHAR},
@@ -341,11 +341,11 @@
       <if test="positionId != null">
         position_id = #{positionId,jdbcType=BIGINT},
       </if>
-      <if test="imgUrl != null">
-        img_url = #{imgUrl,jdbcType=VARCHAR},
-      </if>
       <if test="cardNo != null">
         card_no = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
       </if>
       <if test="qq != null">
         QQ = #{qq,jdbcType=VARCHAR},
@@ -375,8 +375,8 @@
       login_time = #{loginTime,jdbcType=TIMESTAMP},
       nameall = #{nameall,jdbcType=VARCHAR},
       position_id = #{positionId,jdbcType=BIGINT},
-      img_url = #{imgUrl,jdbcType=VARCHAR},
       card_no = #{cardNo,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
       QQ = #{qq,jdbcType=VARCHAR},
       wechat_no = #{wechatNo,jdbcType=VARCHAR},
       cell_phone = #{cellPhone,jdbcType=VARCHAR},

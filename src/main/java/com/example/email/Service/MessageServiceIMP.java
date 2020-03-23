@@ -334,8 +334,10 @@ public class MessageServiceIMP {
     private List<Message> getSenderRecordMsgListByDB(String email) {
 
         MessageExample messageExample = new MessageExample();
-        messageExample.or().andSenderEqualTo(email).andRecStatusEqualTo(SenderStatus.UNCLEAN.getStatus());
+        messageExample.or().andSenderEqualTo(email).andSenderStatusEqualTo(SenderStatus.UNCLEAN.getStatus());
         messageExample.setOrderByClause("last_updated desc");
+
+
         List<Message> messages = messageMapper.selectByExample(messageExample);
         if (null == messages || 0 == messages.size()) {
             return messages;

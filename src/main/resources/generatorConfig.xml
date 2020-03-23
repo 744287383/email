@@ -58,5 +58,10 @@
         </table>
         <table schema="root" tableName="authorrity" domainObjectName="Authorrity" >
         </table>
+        <table schema="root" tableName="draft" domainObjectName="Draft" >
+            <columnOverride column="recipients" jdbcType="VARCHAR"></columnOverride>
+            <columnOverride column="subjects" jdbcType="VARCHAR"></columnOverride>
+            <columnOverride column="content" jdbcType="VARCHAR"></columnOverride>
+        </table>
     </context>
 </generatorConfiguration>
