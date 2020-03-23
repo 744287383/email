@@ -383,4 +383,12 @@ public class MessageServiceIMP {
             return false;
         }
     }
+
+    public void cleanAllSenderMSgRecord(List<String> msgIdList, LoginUser user) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andSenderEqualTo(user.getEmail());
+        Message message=new Message();
+        message.setSenderStatus(SenderStatus.CLEAN.getStatus());
+        messageMapper.updateByExampleSelective(message,messageExample);
+    }
 }

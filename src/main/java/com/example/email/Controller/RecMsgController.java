@@ -138,4 +138,12 @@ public class RecMsgController {
         }
         return "redirect:/user/deletedMsgListView?indexPage="+indexPage;
     }
+    @RequestMapping(value = "/user/cleanAllSenderRecord")
+    public String  cleanAllSenderRecord(@RequestParam("msgId")List<String> msgIdList,
+                                     @RequestParam("indexPage") int indexPage,
+                                     HttpSession session){
+        LoginUser user = (LoginUser) session.getAttribute("user");
+        messageServiceIMP.cleanAllSenderMSgRecord(msgIdList,user);
+        return "redirect:/user/deletedMsgListView";
+    }
 }
