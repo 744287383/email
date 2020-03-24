@@ -54,4 +54,18 @@ public class DraftServiceImp {
         draftExample.or().andSenderEqualTo(loginUser.getEmail()).andIdEqualTo((long) id);
         draftMapper.deleteByExample(draftExample);
     }
+
+    public Draft getDraftById(LoginUser loginUser, int id) {
+        DraftExample draftExample=new DraftExample();
+        draftExample.or().andSenderEqualTo(loginUser.getEmail()).andIdEqualTo((long) id);
+        List<Draft> drafts = draftMapper.selectByExample(draftExample);
+
+        return drafts.get(0);
+    }
+    public Long getDraftCount(LoginUser loginUser){
+        DraftExample draftExample=new DraftExample();
+        draftExample.or().andSenderEqualTo(loginUser.getEmail());
+        long l = draftMapper.countByExample(draftExample);
+        return l;
+    }
 }

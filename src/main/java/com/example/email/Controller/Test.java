@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class Test {
-    @RequestMapping(value = "/test1")
+    @RequestMapping(value = "/user/test")
     public String testView(){
-        return "recMessageList";
+        return "minuteMsgView";
     }
 }

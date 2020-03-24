@@ -80,26 +80,26 @@
                 <li>
                     <a href="/user/recMsglist">
                         <i class="
-glyphicon glyphicon-inbox "></i></i> <span>收信箱</span>
-                        <small class="label pull-right label-info">新</small>
+glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCountDTO.unReadMsgCount}"></span>)</span>
+                        <small class="label pull-right label-danger" th:text="${messageCountDTO.newMsgCount}">3</small>
                     </a>
                 </li>
 
                 <li>
                     <a href="/user/getDraftListView">
-                        <i class="glyphicon glyphicon-edit"></i></i> <span>草稿箱</span>
-                        <small class="label pull-right label-danger">3</small>
+                        <i class="glyphicon glyphicon-edit"></i></i> <span>草稿箱(<span th:text="${messageCountDTO.DraftCount}"></span>)</span>
+
                     </a>
                 </li>
                 <li>
                     <a href="/user/recordSenderMsgView">
-                        <i class="fa fa-envelope"></i> <span>已发送邮件</span>
-                        <small class="label pull-right label-warning">12</small>
+                        <i class="fa fa-envelope"></i> <span>已发送邮件(<span th:text="${messageCountDTO.sendedMsgCount}"></span>)</span>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="/user/deletedMsgListView" >
-                        <i class="glyphicon glyphicon-trash"></i> <span>邮件回收站</span>
+                    <a href="/user/deletedMsgListView">
+                        <i class="glyphicon glyphicon-trash"></i> <span>邮件回收站(<span th:text="${messageCountDTO.deleteMsgCount}"></span>)</span>
+
                     </a>
                 </li>
                 <li>

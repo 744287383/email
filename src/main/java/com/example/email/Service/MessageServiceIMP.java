@@ -40,6 +40,14 @@ public class MessageServiceIMP {
     @Autowired
     private StaffMapper staffMapper;
 
+    public  void updateNewMsgStatus(LoginUser user) {
+        Message message=new Message();
+        message.setNewMsg(NewMsgStatus.OLD_MSG.getStatus());
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andRecipientsEqualTo(user.getEmail());
+        messageMapper.updateByExampleSelective(message,messageExample);
+    }
+
     public long getUserALLMessageCount(LoginUser loginUser) {
         MessageExample messageExample = new MessageExample();
         messageExample.or().andRecipientsEqualTo(loginUser.getEmail());
@@ -49,7 +57,9 @@ public class MessageServiceIMP {
 
     public long getUserUnreadMessageCount(LoginUser loginUser) {
         MessageExample messageExample = new MessageExample();
-        messageExample.or().andRecipientsEqualTo(loginUser.getEmail()).andReadedEqualTo(ReadStatus.UNREAD.getStatus());
+        messageExample.or().andRecipientsEqualTo(loginUser.getEmail())
+                .andReadedEqualTo(ReadStatus.UNREAD.getStatus())
+                .andRecStatusEqualTo(RecStatus.UNDELETE.getStatus());
         long l = messageMapper.countByExample(messageExample);
         return l;
     }
@@ -63,7 +73,11 @@ public class MessageServiceIMP {
 
     public long getUserNewMessageCount(LoginUser loginUser) {
         MessageExample messageExample = new MessageExample();
-        messageExample.or().andRecipientsEqualTo(loginUser.getEmail()).andNewMsgEqualTo(NewMsgStatus.NEW_MSG.getStatus());
+
+        messageExample.or().andRecipientsEqualTo(loginUser.getEmail())
+                .andNewMsgEqualTo(NewMsgStatus.NEW_MSG.getStatus())
+                .andRecStatusEqualTo(RecStatus.UNDELETE.getStatus());
+
         long l = messageMapper.countByExample(messageExample);
         return l;
     }
@@ -392,5 +406,20 @@ public class MessageServiceIMP {
         Message message=new Message();
         message.setSenderStatus(SenderStatus.CLEAN.getStatus());
         messageMapper.updateByExampleSelective(message,messageExample);
+    }
+
+    public long getSendedMsgCount(LoginUser user) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andSenderEqualTo(user.getEmail()).andSenderStatusEqualTo(SenderStatus.UNCLEAN.getStatus());
+        long l = messageMapper.countByExample(messageExample);
+        return l;
+    }
+
+
+    public long getdeleteMsgCount(LoginUser user) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andRecipientsEqualTo(user.getEmail()).andRecStatusEqualTo(RecStatus.DELETED.getStatus());
+        long l = messageMapper.countByExample(messageExample);
+        return l;
     }
 }
