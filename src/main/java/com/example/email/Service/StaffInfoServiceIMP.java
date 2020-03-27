@@ -1,5 +1,6 @@
 package com.example.email.Service;
 
+import com.example.email.ModelDTO.LoginUser;
 import com.example.email.ModelDTO.StaffInfo;
 import com.example.email.entity.*;
 import com.example.email.mapper.AuthorrityMapper;
@@ -135,5 +136,13 @@ public class StaffInfoServiceIMP {
             return staff;
 
         }
+    }
+
+    public void updatePassword(LoginUser user, String password1) {
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andEmailEqualTo(user.getEmail());
+        Staff staff=new Staff();
+        staff.setLoginPassword(password1);
+        staffMapper.updateByExampleSelective(staff,staffExample);
     }
 }

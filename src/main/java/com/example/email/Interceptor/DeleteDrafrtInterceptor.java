@@ -17,7 +17,7 @@ public class DeleteDrafrtInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         LoginUser user = (LoginUser) request.getSession().getAttribute("user");
         String Id = request.getParameter("DId");
-        if (null!=Id){
+        if (null!=Id&&Id.length()!=0){
 
             draftServiceImp.deleteDraftByid(user, Integer.parseInt(Id));
         }

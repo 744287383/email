@@ -2,12 +2,15 @@ package com.example.email.Service;
 
 import com.example.email.Enum.*;
 import com.example.email.ModelDTO.LoginUser;
+import com.example.email.ModelDTO.MessageInfoDTO;
 import com.example.email.ModelDTO.MinMessageDTO;
+import com.example.email.ModelDTO.StaffInfo;
 import com.example.email.entity.MessageExample;
 import com.example.email.entity.Staff;
 import com.example.email.entity.StaffExample;
 import com.example.email.mapper.MessageMapper;
 import com.example.email.mapper.StaffMapper;
+import com.example.email.test.POP3Client;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.mail.pop3.POP3Folder;
@@ -18,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import com.example.email.entity.Message;
+import sun.security.util.Password;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
@@ -422,4 +426,28 @@ public class MessageServiceIMP {
         long l = messageMapper.countByExample(messageExample);
         return l;
     }
+
+    public MessageInfoDTO getMessgeInfoDTO(LoginUser user,String messageName) throws MessagingException, IOException {
+      Message msgdb=getMessageByDB(messageName);
+      String username=msgdb.getRecipients().split("@")[0];
+      String eamilPassword = getEamilPassword(username);
+        POP3Client pop3Client=new POP3Client(username, eamilPassword);
+        Map<String, javax.mail.Message> messages = pop3Client.getMessages();
+        javax.mail.Message msg=messages.get(messageName);
+        MessageInfoDTO messageInfoDTO = pop3Client.parseMessage(msg);
+        StaffInfo staffInfoByEmail = staffInfoServiceIMP.getStaffInfoByEmail(messageInfoDTO.getSenderEmail());
+        messageInfoDTO.setSenderNameAll(staffInfoByEmail.getNameall());
+        StaffInfo staffInfoByEmail1 = staffInfoServiceIMP.getStaffInfoByEmail(messageInfoDTO.getAcceptEmail());
+        messageInfoDTO.setAcceptNameAll(staffInfoByEmail1.getNameall());
+        messageInfoDTO.setMessageName(messageName);
+        return messageInfoDTO;
+    }
+
+    private Message getMessageByDB(String messageName) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andMessageNameEqualTo(messageName);
+        List<Message> messages = messageMapper.selectByExample(messageExample);
+        return messages.get(0);
+    }
+
 }
