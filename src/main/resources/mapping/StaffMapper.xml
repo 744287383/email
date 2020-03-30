@@ -19,6 +19,8 @@
       <arg column="cell_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="dept_no" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="token" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -81,7 +83,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_name, login_password, email, email_password, start_time, login_time, nameall, 
-    position_id, card_no, img_url, QQ, wechat_no, cell_phone, dept_no, token
+    position_id, card_no, img_url, QQ, wechat_no, cell_phone, dept_no, token, sex, status
   </sql>
   <select id="selectByExample" parameterType="com.example.email.entity.StaffExample" resultMap="BaseResultMap">
     select
@@ -119,13 +121,13 @@
       login_time, nameall, position_id, 
       card_no, img_url, QQ, 
       wechat_no, cell_phone, dept_no, 
-      token)
+      token, sex, status)
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{emailPassword,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
       #{loginTime,jdbcType=TIMESTAMP}, #{nameall,jdbcType=VARCHAR}, #{positionId,jdbcType=BIGINT}, 
       #{cardNo,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
       #{wechatNo,jdbcType=VARCHAR}, #{cellPhone,jdbcType=VARCHAR}, #{deptNo,jdbcType=BIGINT}, 
-      #{token,jdbcType=VARCHAR})
+      #{token,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.example.email.entity.Staff">
     insert into staff
@@ -178,6 +180,12 @@
       <if test="token != null">
         token,
       </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -227,6 +235,12 @@
       </if>
       <if test="token != null">
         #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -287,6 +301,12 @@
       <if test="record.token != null">
         token = #{record.token,jdbcType=VARCHAR},
       </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -309,7 +329,9 @@
       wechat_no = #{record.wechatNo,jdbcType=VARCHAR},
       cell_phone = #{record.cellPhone,jdbcType=VARCHAR},
       dept_no = #{record.deptNo,jdbcType=BIGINT},
-      token = #{record.token,jdbcType=VARCHAR}
+      token = #{record.token,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -362,6 +384,12 @@
       <if test="token != null">
         token = #{token,jdbcType=VARCHAR},
       </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -381,7 +409,9 @@
       wechat_no = #{wechatNo,jdbcType=VARCHAR},
       cell_phone = #{cellPhone,jdbcType=VARCHAR},
       dept_no = #{deptNo,jdbcType=BIGINT},
-      token = #{token,jdbcType=VARCHAR}
+      token = #{token,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.example.email.entity.StaffExample" resultMap="BaseResultMap">

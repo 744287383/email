@@ -44,4 +44,8 @@ public class StaffInfo {
 
     private Authorrity authorrity;
 
+    private Integer sex;
+
+    private Integer status;
+
 }

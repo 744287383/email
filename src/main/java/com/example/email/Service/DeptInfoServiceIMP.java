@@ -1,12 +1,16 @@
 package com.example.email.Service;
 
 import com.example.email.ModelDTO.DeptInfo;
+import com.example.email.ModelDTO.DraftDTO;
+import com.example.email.ModelDTO.LoginUser;
 import com.example.email.ModelDTO.StaffInfo;
 import com.example.email.entity.*;
 import com.example.email.mapper.AuthorrityMapper;
 import com.example.email.mapper.DeptMapper;
 import com.example.email.mapper.PositionMapper;
 import com.example.email.mapper.StaffMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,4 +93,22 @@ public class DeptInfoServiceIMP {
             return authorrity;
         }
     }
+
+    public PageInfo<DraftDTO> getAlLDept(int indexPage, int size, LoginUser loginUser) {
+        PageHelper.startPage(indexPage,size);
+        DeptExample deptExample=new DeptExample();
+        deptExample.or().andDeptNameNotEqualTo("root");
+        List<Dept> depts = deptMapper.selectByExample(deptExample);
+        PageInfo pageInfo=new PageInfo(depts,5);
+        List<DeptInfo> collect = depts.stream().map(dept -> {
+            DeptInfo deptInfo = new DeptInfo();
+            BeanUtils.copyProperties(dept, deptInfo);
+            return deptInfo;
+        }).collect(Collectors.toList());
+        pageInfo.setList(collect);
+
+        return pageInfo;
+    }
+
+
 }

@@ -28,7 +28,7 @@ public class LoadLoginUserInfoInterceptor implements HandlerInterceptor {
 
         if (null!=modelAndView)
         modelAndView.addObject("loginUser",user);
-        response.addCookie(new Cookie("name","name"));
+
 
         MessageCountDTO messageCountDTO=new MessageCountDTO();
         Long draftCount = draftServiceImp.getDraftCount(user);

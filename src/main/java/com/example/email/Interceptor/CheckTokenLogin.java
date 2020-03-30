@@ -35,7 +35,7 @@ public class CheckTokenLogin implements HandlerInterceptor {
         loginUser.setPositionName(staffInfo.getPositions().getPositionName());
         loginUser.setAuthorrityName(staffInfo.getAuthorrity().getAuthName());
         request.getSession().setAttribute("user",loginUser);
-        response.addCookie(new Cookie("name","name"));
+
         return true;
     }
 }

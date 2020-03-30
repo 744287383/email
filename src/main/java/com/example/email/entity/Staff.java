@@ -35,7 +35,11 @@ public class Staff {
 
     private String token;
 
-    public Staff(Long id, String userName, String loginPassword, String email, String emailPassword, Date startTime, Date loginTime, String nameall, Long positionId, String cardNo, String imgUrl, String qq, String wechatNo, String cellPhone, Long deptNo, String token) {
+    private Integer sex;
+
+    private Integer status;
+
+    public Staff(Long id, String userName, String loginPassword, String email, String emailPassword, Date startTime, Date loginTime, String nameall, Long positionId, String cardNo, String imgUrl, String qq, String wechatNo, String cellPhone, Long deptNo, String token, Integer sex, Integer status) {
         this.id = id;
         this.userName = userName;
         this.loginPassword = loginPassword;
@@ -52,6 +56,8 @@ public class Staff {
         this.cellPhone = cellPhone;
         this.deptNo = deptNo;
         this.token = token;
+        this.sex = sex;
+        this.status = status;
     }
 
     public Staff() {
@@ -186,6 +192,22 @@ public class Staff {
         this.token = token == null ? null : token.trim();
     }
 
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -208,6 +230,8 @@ public class Staff {
         sb.append(", cellPhone=").append(cellPhone);
         sb.append(", deptNo=").append(deptNo);
         sb.append(", token=").append(token);
+        sb.append(", sex=").append(sex);
+        sb.append(", status=").append(status);
         sb.append("]");
         return sb.toString();
     }
