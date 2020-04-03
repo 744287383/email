@@ -2,15 +2,21 @@ package com.example.email.Service;
 
 import com.example.email.ModelDTO.LoginUser;
 import com.example.email.ModelDTO.StaffInfo;
+import com.example.email.ModelDTO.StaffListDTO;
 import com.example.email.entity.*;
 import com.example.email.mapper.AuthorrityMapper;
+import com.example.email.mapper.DeptMapper;
 import com.example.email.mapper.PositionMapper;
 import com.example.email.mapper.StaffMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class StaffInfoServiceIMP {
@@ -18,9 +24,15 @@ public class StaffInfoServiceIMP {
     @Autowired
     private StaffMapper staffMapper;
     @Autowired
+    private DeptMapper deptMapper;
+    @Autowired
     private PositionMapper positionMapper;
     @Autowired
     private AuthorrityMapper authorrityMapper;
+    @Autowired
+    private DeptInfoServiceIMP deptInfoServiceIMP;
+    @Autowired
+    private PositionServiceImp positionServiceImp;
     public StaffInfo getStaffInfoByToken(String token){
         StaffInfo staffInfo=new StaffInfo();
         StaffExample staffExample=new StaffExample();
@@ -143,6 +155,76 @@ public class StaffInfoServiceIMP {
         staffExample.or().andEmailEqualTo(user.getEmail());
         Staff staff=new Staff();
         staff.setLoginPassword(password1);
+        staffMapper.updateByExampleSelective(staff,staffExample);
+    }
+
+    public PageInfo<StaffListDTO> getStaffListDTO(int indexPage, int size, LoginUser loginUser) {
+        List<Dept> alLDepts = deptInfoServiceIMP.getAlLDept();
+        Map<Long, Dept> collect1 = alLDepts.stream().collect(Collectors.toMap(dept -> dept.getDeptNo(), dept -> dept));
+        List<Position> positions=positionServiceImp.getPositionALL();
+        Map<Long, Position> collect2 = positions.stream().collect(Collectors.toMap(position -> position.getPositionId(), position -> position));
+        PageHelper.startPage(indexPage,size);
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andUserNameNotEqualTo("root");
+        staffExample.setOrderByClause("start_time desc");
+        List<Staff> staffs = staffMapper.selectByExample(staffExample);
+        PageInfo pageInfos=new PageInfo(staffs,5);
+        List<StaffListDTO> collect = staffs.stream().map(staff -> {
+            StaffListDTO staffListDTO = new StaffListDTO();
+            BeanUtils.copyProperties(staff, staffListDTO);
+            String deptName = collect1.get(staffListDTO.getDeptNo()).getDeptName();
+            staffListDTO.setDeptName(deptName);
+            String positionName = collect2.get(staffListDTO.getPositionId()).getPositionName();
+            staffListDTO.setPositionName(positionName);
+            return staffListDTO;
+        }).collect(Collectors.toList());
+        pageInfos.setList(collect);
+        return pageInfos;
+    }
+    public PageInfo<StaffListDTO> getStaffListDTO(int indexPage, int size, LoginUser loginUser,long deptNo) {
+        DeptExample deptExample=new DeptExample();
+        deptExample.or().andDeptNoEqualTo(deptNo);
+        List<Dept> depts = deptMapper.selectByExample(deptExample);
+        Dept dept=depts.get(0);
+        List<Position> positions=positionServiceImp.getPositionALL();
+        Map<Long, Position> collect2 = positions.stream().collect(Collectors.toMap(position -> position.getPositionId(), position -> position));
+        PageHelper.startPage(indexPage,size);
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andUserNameNotEqualTo("root").andDeptNoEqualTo(deptNo);
+        staffExample.setOrderByClause("start_time desc");
+        List<Staff> staffs = staffMapper.selectByExample(staffExample);
+        PageInfo pageInfos=new PageInfo(staffs,5);
+        List<StaffListDTO> collect = staffs.stream().map(staff -> {
+            StaffListDTO staffListDTO = new StaffListDTO();
+            BeanUtils.copyProperties(staff, staffListDTO);
+            String deptName = dept.getDeptName();
+            staffListDTO.setDeptName(deptName);
+            String positionName = collect2.get(staffListDTO.getPositionId()).getPositionName();
+            staffListDTO.setPositionName(positionName);
+            return staffListDTO;
+        }).collect(Collectors.toList());
+        pageInfos.setList(collect);
+        return pageInfos;
+    }
+
+
+    public List<Staff> getStaffListByDeptNo(long deptNo) {
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andDeptNoEqualTo(deptNo);
+        List<Staff> staff = staffMapper.selectByExample(staffExample);
+        return staff;
+    }
+
+    public List<Staff> getStaffByPostionId(long positionId) {
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andPositionIdEqualTo(positionId);
+        List<Staff> staffs = staffMapper.selectByExample(staffExample);
+        return staffs;
+    }
+
+    public void updateStaffByUserName(Staff staff) {
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andUserNameEqualTo(staff.getUserName());
         staffMapper.updateByExampleSelective(staff,staffExample);
     }
 }

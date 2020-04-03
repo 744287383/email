@@ -1,0 +1,414 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精美的多级侧边栏导航菜单</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/demo.css">
+    <link rel="stylesheet" href="/css/sidebar-menu.css">
+    <link rel="stylesheet" href="/css/simpleAlert.css">
+
+    <script src="/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="/js/simpleAlert.js" type="text/javascript"></script>
+    <style type="text/css">
+        .main-sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            min-height: 100%;
+            width: 230px;
+            z-index: 810;
+            background-color: #222d32;
+        }
+
+        body {
+            margin: 0px;
+            width: 100%;
+            min-width: 1500px;
+            max-width: 100%;
+            height: 100%;
+
+        }
+        .div-testDialog {
+            width: 500px;
+            height: auto;
+            margin: 50px auto;
+        }
+
+        .div-testDialog button {
+            margin: 10px;
+        }
+    </style>
+    <!--[if IE]>
+    <script src="/js/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div style="display: inline">
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <div class="header" style="text-align: center">
+<h1>后台管理</h1>
+                </div>
+                <li class="header">菜单选项</li>
+                <li >
+                    <a href="/user/admin/getDeptView">
+                        <i class="glyphicon glyphicon-list"></i>
+                        <span>部门管理</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="/user/index">
+                        <i class="glyphicon glyphicon-education"></i>
+                        <span>添加职位</span>
+                    </a>
+
+                </li>
+                <li class="active">
+                    <a href="/user/admin/getPositionView">
+                        <i class="glyphicon glyphicon-education"></i>
+                        <span>职位管理</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="/user/index">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span>添加员工</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="/user/admin/getStaffListView">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span>员工管理</span>
+                    </a>
+
+                </li>
+
+
+
+
+
+
+
+
+                <li class="header">系统操作</li>
+                <li><a href="/user/index"><i class="fa fa-circle-o text-yellow"></i> <span>返回邮箱</span></a></li>
+                <li><a href="/user/updatePasswordView"><i class="fa fa-circle-o text-yellow"></i> <span>修改管理密码</span></a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-log-out"></i> <span>退了登录</span></a></li>
+
+            </ul>
+        </section>
+    </aside>
+</div>
+<div style="display: inline;">
+    <div style="display: inline-block;width: 230px;"></div>
+    <div style="display: inline-block;width: auto;color: black; min-width: 1200px;max-width: 1200px;">
+        <div style="margin-top: 20px;margin-left: 20px;">
+            <blockquote style="border-left-color: #b8c7ce;border-bottom: 1px solid #b8c7ce;">
+                <p style="color: black">职位与权限管理</p>
+            </blockquote>
+            <div style="width: 1000px;margin-right: auto;margin-left: auto;">
+            <form class="form-inline" name="demo" action="/user/admin/getPositionView" method="post">
+                <div style="width: 280px; margin-left: auto;margin-right: auto">
+                    <span>部门：</span>
+                    <select name="deptNo" class="form-control">
+                        <option value="0">全体部门</option>
+                        <option th:each="dept:${depts}" th:selected="${deptNo==dept.deptNo}" th:value="${dept.deptNo}"><span th:text="${dept.deptName}"></span></option>
+                    </select>
+                <button type="submit" class="btn btn-default">查询</button>
+                </div>
+                <table class="bTable table table-striped table-bordered table-hover table-condensed"
+                       style="margin-top: 10px;">
+                    <thead>
+                    <tr>
+                        <th class="selectColumn" style="width: 50px;"></th>
+                        <th style="width: 150px;">部门名称</th>
+                        <th style="width: 200px;">职位名称</th>
+                        <th style="width: 200px;">职位权限</th>
+                        <th style="width: 200px;">创建时间</th>
+                        <th style="width: 200px;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    <tr th:each="item,iterStat:${pageList.getList()}">
+
+
+
+                        <td style="text-align: center;"><span th:text="${iterStat.count}"></span></td>
+
+                        <td>
+                            <span th:text="${item.deptName}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${item.positionName}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${item.authName}"></span>
+                        </td>
+
+
+
+
+
+                        <td><span th:text="${#dates.format(item.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
+
+                            <td>
+                                <div class="btn-group" role="group" aria-label="..." style="text-align: center;">
+
+                                <button type="button" class="btn btn-default" id="editor" th:data-id="${item.positionName}" th:onclick="'javascript:updatePosition('+${item.positionId}+','+${item.deptNo}+',this'+')'">修改</button>
+                                    <button type="button" class="btn btn-default" th:onclick="'javascript:clickUpdateauth('+${item.authId}+','+${item.positionId}+')'">更改权限</button>
+                                <button type="button" class="btn btn-default" th:onclick="'javascript:deletePosition('+${item.positionId}+')'">删除</button>
+                            </div>
+                            </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+                <nav aria-label="Page navigation" >
+                    <ul class="pagination" style="display:block;width: auto;">
+                        <li th:if="${!pageList.isFirstPage}" >
+                            <a aria-label="Previous" th:href="@{/user/admin/getPositionView(indexPage=1)}">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pageList.isHasPreviousPage()}" ><a th:href="@{/user/admin/getPositionView(indexPage=${pageList.pageNum - 1})}">&lt;</a></li>
+
+                        <li th:each="num:${pageList.navigatepageNums}" th:class="${pageList.pageNum==num? 'active':''}"><a th:href="@{/user/admin/getPositionView(indexPage=${num})}" ><span th:text="${num}"></span></a></li>
+
+                        <li th:if="${pageList.hasNextPage}"><a th:href="@{/user/admin/getPositionView(indexPage=${pageList.pageNum + 1})}">&gt;</a></li>
+                        <li th:if="${!pageList.isLastPage}">
+                            <a  aria-label="Next" th:href="@{/user/admin/getPositionView(indexPage=${pageList.pages})}">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <input style="display: none;" name="indexPage" th:value="${pageList.pageNum}" />
+            </form>
+            </div>
+        </div>
+        <div></div>
+    </div>
+</div>
+<!--模态框-->
+<div style="color: black">
+<!--    修改按钮模态框1-->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel1">修改职位名称</h4>
+                </div>
+                <div class="modal-body">
+                    <!--                    模态框内容-->
+                    <div><form class="form-inline">
+                        <div style="width: 300px;margin-right: auto;margin-left: auto;color: black;">
+                            <div class="form-group">
+                                <label for="deptNo">选择部门：</label>
+                            <select id="deptNo" name="deptNo" class="form-control">
+                                <option th:each="dept:${depts}" th:selected="${deptNo==dept.deptNo}" th:value="${dept.deptNo}"><span th:text="${dept.deptName}"></span></option>
+                            </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="positionName">职位名称：</label>
+                                <input type="text" class="form-control" id="positionName" placeholder="职位名称">
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="updatePostionName()">修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+<!--    模态框2-->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">修改权限</h4>
+                </div>
+                <div class="modal-body">
+                    <!--                    模态框内容-->
+                    <div><form class="form-inline">
+                        <div style="width: 180px;margin-right: auto;margin-left: auto;color: black;">
+                            <div class="form-group">
+                                <label for="authid">选择权限：</label>
+                                <select id="authid" name="deptNo" class="form-control">
+                                    <option th:each="auth:${auths}" th:value="${auth.authId}"><span th:text="${auth.authName}"></span></option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="updateAuth()">修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+</div>
+
+<script>window.jQuery || document.write('<script src="/js/jquery-2.1.1.min.js"><\/script>')</script>
+<script src="/js/sidebar-menu.js"></script>
+<script>
+    $.sidebarMenu($('.sidebar-menu'));
+
+    var PId=0;
+    var aId=0;
+
+    function reductionMsg() {
+        var msgId = document.getElementsByName("msgId");
+        for (var i = 0; i < msgId.length; i++) {
+            if(msgId[i].checked==true){
+                var dblChoseAlert = simpleAlert({
+                    "content": "是否还原选中的邮件到收信箱！",
+                    "buttons": {
+                        "确定": function () {
+
+                            dblChoseAlert.close();
+                            document.demo.action = "/user/reductionMsg";
+                            document.demo.submit();
+                            return true;
+                        },
+                        "取消": function () {
+
+                            dblChoseAlert.close();
+                            return false;
+                        }
+                    }
+                });
+
+                return false;
+            }
+        }
+        alert("请勾选后再操作");
+        return false;
+    }
+
+   function deletePosition(pid) {
+       var dblChoseAlert = simpleAlert({
+           "content": "是否删除该职位?",
+           "buttons": {
+               "确定": function () {
+
+                   dblChoseAlert.close();
+                   $.ajax({
+
+                       url:"/user/admin/deletePosition",
+
+                       type:"POST",
+
+                       data:{"positionId":pid},
+
+                       success:function(data){
+
+                           alert(data.msg);
+                           location.reload();
+                       }
+                   });
+
+                   return true;
+               },
+               "取消": function () {
+
+                   dblChoseAlert.close();
+                   return false;
+               }
+           }
+       });
+
+
+   }
+   function updatePosition(positionid,depatNo,e) {
+PId=positionid;
+$("#deptNo").val(depatNo);
+var p= $("#editor").data("id");
+$("#positionName").val(p);
+$("#myModal1").modal("show");
+
+   }
+   function updatePostionName() {
+        var positionName=$("#positionName").val();
+        var deptNo=$("#deptNo").val();
+        if (null==positionName||positionName.trim().length<2){
+            alert("职位名称不能为且长度不能少于2位字符");
+            return;
+        }
+       $.ajax({
+
+           url:"/user/admin/updatePositionName",
+
+           type:"POST",
+
+           data:{"positionId":PId,
+           "positonName":positionName,
+               "deptNo":deptNo
+           },
+
+           success:function(data){
+
+               alert(data.msg);
+               $("#myModal1").modal("hide");
+               location.reload();
+           }
+       })
+   }
+   function clickUpdateauth(authId,positionid) {
+        aId=authId;
+        PId=positionid;
+        $("#authid").val(aId);
+       $("#myModal2").modal("show");
+
+   }
+   function updateAuth() {
+        var authid = $("#authid").val();
+
+       $.ajax({
+
+           url:"/user/admin/updateAuth",
+           type:"POST",
+           data:{"authId":authid,
+                "positionId":PId
+           },
+
+           success:function(data){
+
+               alert(data.msg);
+               $("#myModal1").modal("hide");
+               location.reload();
+           }
+       })
+
+
+   }
+
+
+</script>
+</body>
+</html>

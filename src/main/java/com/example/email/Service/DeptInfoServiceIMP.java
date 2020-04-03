@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,6 +99,7 @@ public class DeptInfoServiceIMP {
         PageHelper.startPage(indexPage,size);
         DeptExample deptExample=new DeptExample();
         deptExample.or().andDeptNameNotEqualTo("root");
+        deptExample.setOrderByClause("create_time desc");
         List<Dept> depts = deptMapper.selectByExample(deptExample);
         PageInfo pageInfo=new PageInfo(depts,5);
         List<DeptInfo> collect = depts.stream().map(dept -> {
@@ -109,6 +111,52 @@ public class DeptInfoServiceIMP {
 
         return pageInfo;
     }
+    public List<Dept> getAlLDept() {
+
+        DeptExample deptExample=new DeptExample();
+        deptExample.or().andDeptNameNotEqualTo("root");
+        List<Dept> depts = deptMapper.selectByExample(deptExample);
+        return depts;
+    }
 
 
+    public Dept getDeptByDeptName(String deptName) {
+        DeptExample deptExample=new DeptExample();
+        deptExample.or().andDeptNameEqualTo(deptName);
+        List<Dept> depts = deptMapper.selectByExample(deptExample);
+        if (depts.size()==0){
+            return null;
+        }
+        return depts.get(0);
+    }
+
+    public void addDept(String deptName) {
+        Dept dept=new Dept();
+        dept.setDeptName(deptName);
+        dept.setCreateTime(new Date(System.currentTimeMillis()));
+        deptMapper.insertSelective(dept);
+    }
+
+
+    public void deleteDeptByDeptNo(long deptNo) {
+        DeptExample deptExample=new DeptExample();
+        deptExample.or().andDeptNoEqualTo(deptNo);
+        deptMapper.deleteByExample(deptExample);
+    }
+
+    public Dept getDeptByDeptNO(long deptNo) {
+        DeptExample deptExample=new DeptExample();
+        deptExample.or().andDeptNoEqualTo(deptNo);
+        List<Dept> depts = deptMapper.selectByExample(deptExample);
+        if (null==depts||0==depts.size()){
+            return null;
+        }
+        return depts.get(0);
+    }
+
+    public void updateDeptByDeptNo(Dept dept) {
+        DeptExample deptExample=new DeptExample();
+        deptExample.or().andDeptNoEqualTo(dept.getDeptNo());
+        deptMapper.updateByExampleSelective(dept,deptExample);
+    }
 }

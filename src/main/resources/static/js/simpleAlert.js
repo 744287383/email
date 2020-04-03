@@ -16,7 +16,7 @@ var simpleAlert = function (opts) {
     var $simpleAlert = $('<div class="simpleAlert">');
     var $shelter = $('<div class="simpleAlertShelter">');
     var $simpleAlertBody = $('<div class="simpleAlertBody">');
-    var $simpleAlertBodyClose = $('<img class="simpleAlertBodyClose" src="/imgages/close.png" height="14" width="14"/>');
+    var $simpleAlertBodyClose = $('<img class="simpleAlertBodyClose" src="/images/close.png" height="14" width="14"/>');
     var $simpleAlertBodyContent = $('<p class="simpleAlertBodyContent">' + option.content + '</p>');
     dialog.init = function () {
         $simpleAlertBody.append($simpleAlertBodyClose).append($simpleAlertBodyContent);

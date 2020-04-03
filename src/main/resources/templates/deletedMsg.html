@@ -58,7 +58,7 @@
 
 
 
-                                        <img  alt="..." th:src="${loginUser.imgUrl}" class="img-circle img-thumbnail">
+                                        <img  alt="..." style="width: 70px;height: 70px;" th:src="${loginUser.imgUrl}" class="img-circle img-thumbnail">
                                         <br><label th:text="${loginUser.nameall}"></label>
                                         <br><span th:text="${loginUser.email}"></span>
                     </a>
@@ -74,7 +74,7 @@
                 <li>
                     <a href="#">
                         <i class="glyphicon glyphicon-list-alt"></i></i> <span>群发邮件</span>
-                        <small class="label pull-right label-info">新</small>
+
                     </a>
                 </li>
                 <li>
@@ -105,11 +105,12 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCoun
                 <li>
                     <a href="#">
                         <i class="glyphicon glyphicon-book"></i> <span>通讯录</span>
-                        <small class="label pull-right label-warning">12</small>
+                     
                     </a>
                 </li>
 
                 <li class="header">系统操作</li>
+                <li th:if="${loginUser.authorrityName=='root'}"><a href="/user/admin/getDeptView"><i class="fa fa-circle-o text-yellow"></i> <span>进入后台管理</span></a></li>
                 <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>修改个人资料</span></a></li>
                 <li><a href="/user/updatePasswordView"><i class="fa fa-circle-o text-yellow"></i> <span>修改密码</span></a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-log-out"></i> <span>退了登录</span></a></li>
@@ -156,7 +157,7 @@ glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                         <td><span th:if="${msg.isFileStatus==1}" class="
 glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
                         <td><span th:text="${msg.sender}"></span></td>
-                        <a th:href="@{/user/getMsgInfo(messageName=${msg.messageName})}" style="color: black;">
+
                         <td>
                             <a th:href="@{/user/getMsgInfo(messageName=${msg.messageName})}" style="color: black;">
                             <div th:text="${msg.subject}" style="width:460px; overflow: hidden;white-space: nowrap;text-overflow:ellipsis;"></div>
@@ -178,7 +179,8 @@ glyphicon glyphicon-paperclip" aria-hidden="true"></span></td>
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li th:if="${pageList.isHasPreviousPage()}" ><a th:href="@{/user/deletedMsgListView(indexPage=${pageList.pageNum - 1})}">&lt;</a></li>
+                        <li th:if="${pageList.isHasPreviousPage()}" >
+                            <a th:href="@{/user/deletedMsgListView(indexPage=${pageList.pageNum - 1})}">&lt;</a></li>
 
                         <li th:each="num:${pageList.navigatepageNums}" th:class="${pageList.pageNum==num? 'active':''}"><a th:href="@{/user/deletedMsgListView(indexPage=${num})}" ><span th:text="${num}"></span></a></li>
 
