@@ -450,4 +450,10 @@ public class MessageServiceIMP {
         return messages.get(0);
     }
 
+    public void updateMessage(LoginUser user, Message message) {
+        MessageExample messageExample=new MessageExample();
+        messageExample.or().andMessageNameEqualTo(message.getMessageName()).andRecipientsEqualTo(user.getEmail());
+        messageMapper.updateByExampleSelective(message,messageExample);
+
+    }
 }

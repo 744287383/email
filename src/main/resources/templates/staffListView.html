@@ -64,8 +64,8 @@
                     </a>
 
                 </li>
-                <li >
-                    <a href="/user/index">
+                <li>
+                    <a href="/user/admin/getAddPositionView">
                         <i class="glyphicon glyphicon-education"></i>
                         <span>添加职位</span>
                     </a>
@@ -78,8 +78,8 @@
                     </a>
 
                 </li>
-                <li >
-                    <a href="/user/index">
+                <li>
+                    <a href="/user/admin/getAddStaffView">
                         <i class="glyphicon glyphicon-user"></i>
                         <span>添加员工</span>
                     </a>
@@ -160,7 +160,7 @@
                             <span th:text="${item.deptName}"></span>
                         </td>
                         <td>
-                            <span th:text="${item.positionName}"></span>
+                            <span th:text="${item.positionName+'('+item.authName+')'}"></span>
                         </td>
                         <td>
                             <span th:text="${item.cellPhone}"></span>
@@ -179,7 +179,7 @@
                             <td>
                                 <div class="btn-group" role="group" aria-label="..." style="text-align: center;">
 
-                                <button type="button" class="btn btn-default" th:onclick="'javascript:editorDraft('+${item.deptNo}+')'">修改</button>
+                                <button type="button" class="btn btn-default" id="editor" th:data-username="${item.userName}" onclick="editorStaff()">修改</button>
                                 <button type="button" class="btn btn-default" id="quit" th:data-username="${item.userName}" onclick="deleteStaff()">辞退</button>
                             </div>
                             </td>
@@ -192,17 +192,17 @@
                 <nav aria-label="Page navigation" >
                     <ul class="pagination" style="display:block;width: auto;">
                         <li th:if="${!pageList.isFirstPage}" >
-                            <a aria-label="Previous" th:href="@{/user/deletedMsgListView(indexPage=1)}">
+                            <a aria-label="Previous" th:href="@{/user/admin/getStaffListView(indexPage=1)}">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li th:if="${pageList.isHasPreviousPage()}" ><a th:href="@{/user/deletedMsgListView(indexPage=${pageList.pageNum - 1})}">&lt;</a></li>
+                        <li th:if="${pageList.isHasPreviousPage()}" ><a th:href="@{/user/admin/getStaffListView(indexPage=${pageList.pageNum - 1})}">&lt;</a></li>
 
-                        <li th:each="num:${pageList.navigatepageNums}" th:class="${pageList.pageNum==num? 'active':''}"><a th:href="@{/user/deletedMsgListView(indexPage=${num})}" ><span th:text="${num}"></span></a></li>
+                        <li th:each="num:${pageList.navigatepageNums}" th:class="${pageList.pageNum==num? 'active':''}"><a th:href="@{/user/admin/getStaffListView(indexPage=${num})}" ><span th:text="${num}"></span></a></li>
 
-                        <li th:if="${pageList.hasNextPage}"><a th:href="@{/user/deletedMsgListView(indexPage=${pageList.pageNum + 1})}">&gt;</a></li>
+                        <li th:if="${pageList.hasNextPage}"><a th:href="@{/user/admin/getStaffListView(indexPage=${pageList.pageNum + 1})}">&gt;</a></li>
                         <li th:if="${!pageList.isLastPage}">
-                            <a  aria-label="Next" th:href="@{/user/deletedMsgListView(indexPage=${pageList.pages})}">
+                            <a  aria-label="Next" th:href="@{/user/admin/getStaffListView(indexPage=${pageList.pages})}">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -212,7 +212,7 @@
             </form>
             </div>
         </div>
-        <div></div>
+
     </div>
 </div>
 
@@ -223,78 +223,7 @@
     $.sidebarMenu($('.sidebar-menu'));
 
 
-    function reductionMsg() {
-        var msgId = document.getElementsByName("msgId");
-        for (var i = 0; i < msgId.length; i++) {
-            if(msgId[i].checked==true){
-                var dblChoseAlert = simpleAlert({
-                    "content": "是否还原选中的邮件到收信箱！",
-                    "buttons": {
-                        "确定": function () {
 
-                            dblChoseAlert.close();
-                            document.demo.action = "/user/reductionMsg";
-                            document.demo.submit();
-                            return true;
-                        },
-                        "取消": function () {
-
-                            dblChoseAlert.close();
-                            return false;
-                        }
-                    }
-                });
-
-                return false;
-            }
-        }
-        alert("请勾选后再操作");
-        return false;
-    }
-    // 彻底删除邮件
-    function deletedMsg() {
-        var msgId = document.getElementsByName("msgId");
-        for (var i = 0; i < msgId.length; i++) {
-            if(msgId[i].checked==true){
-                var dblChoseAlert = simpleAlert({
-                    "content": "确定彻底删除邮件！",
-                    "buttons": {
-                        "确定": function () {
-
-                            dblChoseAlert.close();
-                            document.demo.action = "/user/deletedMsg";
-                            document.demo.submit();
-                            return true;
-                        },
-                        "取消": function () {
-                            dblChoseAlert.close();
-                            return false;
-                        }
-                    }
-                })
-
-
-                return false;
-            }
-        }
-        alert("请勾选后再操作");
-        return  false;
-    }
-
-    // 点击全选与全反选
-    function setALLNo(e) {
-        var box = e;
-        var msgId = document.getElementsByName("msgId");
-        if (box.checked == false) {
-            for (var i = 0; i < msgId.length; i++) {
-                msgId[i].checked = false;
-            }
-        } else {
-            for (var i = 0; i < msgId.length; i++) {
-                msgId[i].checked = true;
-            }
-        }
-    }
 function deleteStaff() {
 var username=$("#quit").data("username");
     var dblChoseAlert = simpleAlert({
@@ -305,7 +234,7 @@ var username=$("#quit").data("username");
                 dblChoseAlert.close();
                 $.ajax({
 
-                    url:"/user/admin/deleteStaff",
+                    url:"/user/deleteStaff",
 
                     type:"POST",
 
@@ -314,9 +243,12 @@ var username=$("#quit").data("username");
                     },
 
                     success:function(data){
+                        dblChoseAlert.close();
+                        setTimeout(function () {
+                            alert(data.msg);
+                            location.reload();
+                        },500)
 
-                        alert(data.msg);
-                        location.reload();
                     }
                 })
 
@@ -328,6 +260,13 @@ var username=$("#quit").data("username");
             }
         }
     })
+
+}
+
+function editorStaff() {
+    var username = $("#editor").data("username");
+    window.location.href="/user/admin/getUpdateStaffView?username="+username;
+
 
 }
 

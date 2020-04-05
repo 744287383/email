@@ -3,6 +3,7 @@ package com.example.email.Interceptor;
 import com.example.email.ModelDTO.LoginUser;
 import com.example.email.ModelDTO.StaffInfo;
 import com.example.email.Service.StaffInfoServiceIMP;
+import com.example.email.entity.Position;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,8 @@ public class CheckTokenLogin implements HandlerInterceptor {
         BeanUtils.copyProperties(staffInfo,loginUser);
         loginUser.setPositionName(staffInfo.getPositions().getPositionName());
         loginUser.setAuthorrityName(staffInfo.getAuthorrity().getAuthName());
+        loginUser.setAuthid(staffInfo.getAuthorrity().getAuthId());
+        loginUser.setPositionId(staffInfo.getPositionId());
         request.getSession().setAttribute("user",loginUser);
 
         return true;

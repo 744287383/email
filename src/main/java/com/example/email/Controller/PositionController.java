@@ -137,4 +137,23 @@ public class PositionController {
         result.put("msg","职位添加成功！");
         return result;
     }
+
+    @RequestMapping(value = "/user/admin/getPositionByDeptNo")
+    @ResponseBody
+    public Map<String,Object> getPositionByDeptNo(@RequestParam("deptNo")long deptNo){
+        Map<String,Object> result=new HashMap<>();
+
+        List<Position> positions = positionServiceImp.getpositionByDeptNo(deptNo);
+        result.put("positions",positions);
+        return result;
+    }
+    @RequestMapping(value = "/user/v3/getPositionByDeptNoAndPosition")
+    @ResponseBody
+    public Map<String,Object> getPositionByDeptNoAndPosition(@RequestParam("deptNo")long deptNo,HttpSession session){
+        Map<String,Object> result=new HashMap<>();
+        LoginUser user = (LoginUser) session.getAttribute("user");
+        List<Position> positions = positionServiceImp.getpositionByDeptNo(deptNo,user.getAuthid());
+        result.put("positions",positions);
+        return result;
+    }
 }

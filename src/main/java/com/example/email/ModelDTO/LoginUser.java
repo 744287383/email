@@ -10,6 +10,9 @@ public class LoginUser {
     private String emailPassword;
     private String nameall;
     private String imgUrl;
+    private Long authid;
+    private Long positionId;
+    private Long deptNo;
     private String authorrityName;
     private String positionName;
 }

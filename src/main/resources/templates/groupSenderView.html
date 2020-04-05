@@ -91,7 +91,7 @@
                 </a>
 
             </li>
-            <li>
+            <li class="active">
                 <a href="/user/getGroupSender">
                     <i class="glyphicon glyphicon-list-alt"></i></i> <span>群发邮件</span>
 
@@ -108,6 +108,7 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCoun
             <li>
                 <a href="/user/getDraftListView">
                     <i class="glyphicon glyphicon-edit"></i></i> <span>草稿箱(<span th:text="${messageCountDTO.DraftCount}"></span>)</span>
+
                 </a>
             </li>
             <li>
@@ -120,7 +121,6 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCoun
                     <i class="glyphicon glyphicon-trash"></i> <span>邮件回收站(<span th:text="${messageCountDTO.deleteMsgCount}"></span>)</span>
                 </a>
             </li>
-
             <li>
                 <a href="/user/getMailBookView">
                     <i class="glyphicon glyphicon-book"></i> <span>通讯录</span>
@@ -141,32 +141,72 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCoun
 </div>
 <div style="display: inline">
     <div style="display: inline-block;width: 230px;"></div>
-    <div style="display: inline-block;width: 1100px;padding: 25px;color: black; ">
+    <div style="display: inline-block;width: 1000px;padding: 25px;">
+        <form name="msg" method="post" action="/user/groupSender" enctype="multipart/form-data">
+            <input type="text" style="display: none;" name="DId" th:value="${null!=draftDTO?draftDTO.id:null}">
         <blockquote style="border-left-color: #b8c7ce;border-bottom: 1px solid #b8c7ce;">
-            <p style="color: black">邮件详细</p>
+            <p style="color: black">邮件群发</p>
         </blockquote>
-        <small><a onclick="javascript :self.location=document.referrer;" style="color: black;cursor: pointer;">&lt;&lt;返回上层</a></small>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">主题:<span th:text="${messgeInfoDTO.subject}"></span></h3>
-            </div>
-            <div class="panel-body" style="border-bottom: 1px solid #ddd;">
-                <p>发件人：<span th:text="${messgeInfoDTO.senderNameAll}"></span><small>&lt; <span id="senderEmail" th:text="${messgeInfoDTO.senderEmail}"></span> &gt;</small></p>
-                <p>时   间：<span th:text="${messgeInfoDTO.sendDate}"></span></p>
-                <p>收件人：<span th:text="${messgeInfoDTO.acceptNameAll}"></span><small>&lt; <span  th:text="${messgeInfoDTO.acceptEmail}"></span> &gt;</small></p>
-                <p th:if="${messgeInfoDTO.fileurl!=null}">附件：
-                    <a th:href="${messgeInfoDTO.fileurl}" th:download="${messgeInfoDTO.fileName}" style="color: black;">
-                    <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span th:text="${messgeInfoDTO.fileName}"></span>
-                    </a>
-                </p>
-            </div>
-            <div class="panel-body" style="border-bottom: 1px solid #ddd;" th:utext="${messgeInfoDTO.text}">
 
-        </div>
-            <div class="panel-body" th:if="${!messgeInfoDTO.senderEmail.equals(loginUser.email)}">
-                <button  type="button" class="btn btn-primary" onclick="reply()" style="position:relative;right:0px;margin-top: 10px;">回复</button>
+
+        <div style="color: black;height: auto;">
+
+        <div>
+            <label for="email">收件人:<div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" onclick="click1Action()" th:if="${loginUser.authorrityName!='V1'}">清空</button>
+                <button type="button" class="btn btn-default" onclick="click2Action()" th:if="${loginUser.authorrityName=='V2'||loginUser.authorrityName=='V3'}">本部门员工</button>
+                <button type="button" class="btn btn-default" onclick="click3Action()" th:if="${loginUser.authorrityName=='root'}">全体员工</button>
+            </div></label>
+            <div>
+                <input type="text" id="email" class="form-control" th:value="${null!=draftDTO?draftDTO.recipients:null}" name="to" placeholder="多个收件人地址用';'分隔">
+                <input type="text" style="display: none" id="handleType" name="handleType" class="form-control" value="1">
             </div>
         </div>
+        <div >
+            <label for="inputPassword3">主题:</label>
+            <div>
+                <input type="text" class="form-control" id="inputPassword3" th:value="${null!=draftDTO?draftDTO.subjects:null}" name="subject" placeholder="主题">
+            </div>
+        </div>
+        </div>
+            <div>
+                <a href="javascript:;" class="file a-upload">选择附件
+                    <input type="file" name="file" id=""><span class="showFileName"></span>
+                </a>
+            </div>
+
+
+        <div style="margin-top: 15px;">
+        <div id="div1" class="toolbar">
+        </div>
+        <div style="padding: 5px 0; color: black">邮件内容:</div>
+        <div id="div2" class="text" style="color: black;"> <!--可使用 min-height 实现编辑区域自动增加高度-->
+        </div>
+    <textarea  id="text1" style=" display:none;width:100%; height:200px;" name="text"></textarea>
+            <button type="submit" class="btn btn-primary"   style="position:relative;right:0px;margin-top: 10px;margin-right: 10px;">发送</button>
+    <script type="text/javascript" src="/js/wangEditor.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        var text=[[${null!=draftDTO?draftDTO.content:' '}]];
+
+        var E = window.wangEditor;
+        var editor = new E('#div1', '#div2');
+        editor.customConfig.uploadImgServer = '/upload';
+        editor.customConfig.uploadFileName = 'file';
+        editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024;
+        editor.customConfig.uploadImgMaxLength = 5;
+        var $text1 = $('#text1');
+        editor.customConfig.onchange = function (html) {
+            // 监控变化，同步更新到 textarea
+            $text1.val(html)
+        };
+        editor.create();
+        editor.txt.html(text);
+        // 初始化 textarea 的值
+        $text1.val(editor.txt.html());
+    </script>
+        </div>
+
+            </form>
     </div>
 </div>
 
@@ -186,12 +226,23 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCoun
             $(".showFileName").html(fileName);
 
     })
-function reply() {
-        var email = $("#senderEmail").text();
-    window.location.href="/user/write?email="+email;
 
-}
 
+    function click1Action() {
+    $("#email").val("");
+        $("#email").removeAttr("disabled");
+        $("#handleType").val(1);
+    }
+    function click2Action() {
+        $("#email").val("@本部门全体员工");
+        $("#email").attr("disabled",'disabled');
+        $("#handleType").val(2);
+    }
+    function click3Action() {
+        $("#email").val("@全体员工");
+        $("#email").attr("disabled",'disabled');
+        $("#handleType").val(3);
+    }
 </script>
 </body>
 </html>

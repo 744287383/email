@@ -63,5 +63,10 @@
             <columnOverride column="subjects" jdbcType="VARCHAR"></columnOverride>
             <columnOverride column="content" jdbcType="VARCHAR"></columnOverride>
         </table>
+        <table schema="root" tableName="friendgroup" domainObjectName="FriendGroup" >
+        </table>
+        <table schema="root" tableName="addressbook" domainObjectName="AddressBook" >
+        </table>
+
     </context>
 </generatorConfiguration>

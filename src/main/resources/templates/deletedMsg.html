@@ -72,7 +72,7 @@
 
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/user/getGroupSender">
                         <i class="glyphicon glyphicon-list-alt"></i></i> <span>群发邮件</span>
 
                     </a>
@@ -103,7 +103,7 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCoun
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/user/getMailBookView">
                         <i class="glyphicon glyphicon-book"></i> <span>通讯录</span>
                      
                     </a>
@@ -111,7 +111,8 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCoun
 
                 <li class="header">系统操作</li>
                 <li th:if="${loginUser.authorrityName=='root'}"><a href="/user/admin/getDeptView"><i class="fa fa-circle-o text-yellow"></i> <span>进入后台管理</span></a></li>
-                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>修改个人资料</span></a></li>
+                <li th:if="${loginUser.authorrityName=='V3'}"><a href="/user/v3/getStaffListView"><i class="fa fa-circle-o text-yellow"></i> <span>部门员工管理</span></a></li>
+                <li><a href="/user/getUpdateProfile"><i class="fa fa-circle-o text-yellow"></i> <span>修改个人资料</span></a></li>
                 <li><a href="/user/updatePasswordView"><i class="fa fa-circle-o text-yellow"></i> <span>修改密码</span></a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-log-out"></i> <span>退了登录</span></a></li>
 
@@ -129,7 +130,7 @@ glyphicon glyphicon-inbox"></i></i> <span>收信箱(<span th:text="${messageCoun
             <form name="demo" method="post">
                 <button class="btn btn-info" type="button" onclick="reductionMsg()">还原</button>
                 <button class="btn btn-danger" type="button" onclick="deletedMsg()">彻底删除</button>
-                <table class="bTable table table-striped table-bordered table-hover table-condensed"
+                <table class="table table-hover"
                        style="margin-top: 10px;">
                     <thead>
                     <tr>

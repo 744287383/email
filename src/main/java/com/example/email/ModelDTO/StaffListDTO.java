@@ -23,6 +23,10 @@ public class StaffListDTO {
 
     private Long positionId;
 
+    private Long authId;
+
+    private String authName;
+
     private String cardNo;
 
     private String imgUrl;

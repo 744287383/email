@@ -44,6 +44,8 @@ public class LoginService {
         BeanUtils.copyProperties(staffInfo,loginUser);
         loginUser.setAuthorrityName(staffInfo.getAuthorrity().getAuthName());
         loginUser.setPositionName(staffInfo.getPositions().getPositionName());
+        loginUser.setPositionId(staffInfo.getPositionId());
+        loginUser.setAuthid(staffInfo.getAuthorrity().getAuthId());
         return loginUser;
     }
     public void updateToken(String token,String email){

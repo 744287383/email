@@ -33,6 +33,11 @@
             <version>2.1.1</version>
         </dependency>
         <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>5.2.2.RELEASE</version>
@@ -107,7 +112,7 @@
                 <version>6.2.4</version>
                 <configuration>
                     <driver>com.mysql.cj.jdbc.Driver</driver>
-                    <url>jdbc:mysql://test.com:3306/test?serverTimezone=UTC</url>
+                    <url>jdbc:mysql://test.com:3306/test?serverTimezone=UTC<![CDATA[&]]>useUnicode=true<![CDATA[&]]>characterEncoding=utf8<![CDATA[&]]>mysqlEncoding=utf8</url>
 
                     <user>root</user>
                     <password>sise</password>

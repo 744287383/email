@@ -86,6 +86,15 @@ private DeptMapper deptMapper;
 
         return positions;
     }
+    public List<Position> getpositionByDeptNo(long deptNo,long authId) {
+        PositionExample positionExample=new PositionExample();
+        positionExample.or().andDeptNoEqualTo(deptNo).andAuthIdBetween((long)2,(long)3);
+        List<Position> positions = positionMapper.selectByExample(positionExample);
+
+
+
+        return positions;
+    }
 
     public void deletePositionByPositionId(long positionId) {
         PositionExample positionExample=new PositionExample();

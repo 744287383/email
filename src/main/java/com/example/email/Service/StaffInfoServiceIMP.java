@@ -33,6 +33,8 @@ public class StaffInfoServiceIMP {
     private DeptInfoServiceIMP deptInfoServiceIMP;
     @Autowired
     private PositionServiceImp positionServiceImp;
+    @Autowired
+    private AuthorrityServiceImp authorrityServiceImp;
     public StaffInfo getStaffInfoByToken(String token){
         StaffInfo staffInfo=new StaffInfo();
         StaffExample staffExample=new StaffExample();
@@ -163,6 +165,8 @@ public class StaffInfoServiceIMP {
         Map<Long, Dept> collect1 = alLDepts.stream().collect(Collectors.toMap(dept -> dept.getDeptNo(), dept -> dept));
         List<Position> positions=positionServiceImp.getPositionALL();
         Map<Long, Position> collect2 = positions.stream().collect(Collectors.toMap(position -> position.getPositionId(), position -> position));
+        List<Authorrity> allAuth = authorrityServiceImp.getAllAuth();
+        Map<Long, Authorrity> collect3 = allAuth.stream().collect(Collectors.toMap(authorrity -> authorrity.getAuthId(), authorrity -> authorrity));
         PageHelper.startPage(indexPage,size);
         StaffExample staffExample=new StaffExample();
         staffExample.or().andUserNameNotEqualTo("root");
@@ -172,10 +176,16 @@ public class StaffInfoServiceIMP {
         List<StaffListDTO> collect = staffs.stream().map(staff -> {
             StaffListDTO staffListDTO = new StaffListDTO();
             BeanUtils.copyProperties(staff, staffListDTO);
+
             String deptName = collect1.get(staffListDTO.getDeptNo()).getDeptName();
             staffListDTO.setDeptName(deptName);
             String positionName = collect2.get(staffListDTO.getPositionId()).getPositionName();
             staffListDTO.setPositionName(positionName);
+            Position position = collect2.get(staffListDTO.getPositionId());
+            Authorrity authorrity=collect3.get(position.getAuthId());
+            staffListDTO.setAuthId(authorrity.getAuthId());
+            staffListDTO.setAuthName(authorrity.getAuthName());
+
             return staffListDTO;
         }).collect(Collectors.toList());
         pageInfos.setList(collect);
@@ -188,9 +198,11 @@ public class StaffInfoServiceIMP {
         Dept dept=depts.get(0);
         List<Position> positions=positionServiceImp.getPositionALL();
         Map<Long, Position> collect2 = positions.stream().collect(Collectors.toMap(position -> position.getPositionId(), position -> position));
+        List<Authorrity> allAuth = authorrityServiceImp.getAllAuth();
+        Map<Long, Authorrity> collect3 = allAuth.stream().collect(Collectors.toMap(authorrity -> authorrity.getAuthId(), authorrity -> authorrity));
         PageHelper.startPage(indexPage,size);
         StaffExample staffExample=new StaffExample();
-        staffExample.or().andUserNameNotEqualTo("root").andDeptNoEqualTo(deptNo);
+        staffExample.or().andUserNameNotEqualTo("root").andUserNameNotEqualTo(loginUser.getUserName()).andDeptNoEqualTo(deptNo);
         staffExample.setOrderByClause("start_time desc");
         List<Staff> staffs = staffMapper.selectByExample(staffExample);
         PageInfo pageInfos=new PageInfo(staffs,5);
@@ -201,6 +213,10 @@ public class StaffInfoServiceIMP {
             staffListDTO.setDeptName(deptName);
             String positionName = collect2.get(staffListDTO.getPositionId()).getPositionName();
             staffListDTO.setPositionName(positionName);
+            Position position = collect2.get(staffListDTO.getPositionId());
+            Authorrity authorrity=collect3.get(position.getAuthId());
+            staffListDTO.setAuthId(authorrity.getAuthId());
+            staffListDTO.setAuthName(authorrity.getAuthName());
             return staffListDTO;
         }).collect(Collectors.toList());
         pageInfos.setList(collect);
@@ -226,5 +242,34 @@ public class StaffInfoServiceIMP {
         StaffExample staffExample=new StaffExample();
         staffExample.or().andUserNameEqualTo(staff.getUserName());
         staffMapper.updateByExampleSelective(staff,staffExample);
+    }
+
+    public void addStaff(Staff staff) {
+        staffMapper.insertSelective(staff);
+    }
+
+    public Staff getStaffByUsername(String username) {
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andUserNameEqualTo(username);
+        List<Staff> staff = staffMapper.selectByExample(staffExample);
+        if (null==staff||staff.size()==0){
+            return null;
+        }
+        return staff.get(0);
+    }
+
+    public List<Staff> getStaffByDeptNo(String  username,Long deptNo) {
+        StaffExample staffExample=new StaffExample();
+        staffExample.or().andDeptNoEqualTo(deptNo).andUserNameNotEqualTo(username);
+        List<Staff> staff = staffMapper.selectByExample(staffExample);
+        return staff;
+    }
+
+    public List<Staff> getStaffAll(String username) {
+        StaffExample staffExample = new StaffExample();
+        staffExample.or().andUserNameNotEqualTo(username);
+        List<Staff> staff = staffMapper.selectByExample(staffExample);
+
+        return staff;
     }
 }

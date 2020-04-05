@@ -96,4 +96,5 @@ public class DeptController {
         result.put("msg","部门修改成功！");
         return result;
     }
+
 }
