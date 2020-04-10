@@ -56,4 +56,10 @@ public class LoginService {
         staffMapper.updateByExampleSelective(staff, staffExample);
 
     }
+
+    public int getStatus(String email) {
+        StaffInfo staffInfoByEmail = staffInfoServiceIMP.getStaffInfoByEmail(email);
+
+        return staffInfoByEmail.getStatus();
+    }
 }

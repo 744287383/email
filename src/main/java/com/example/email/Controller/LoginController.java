@@ -1,5 +1,6 @@
 package com.example.email.Controller;
 
+import com.example.email.Enum.StaffStatus;
 import com.example.email.ModelDTO.LoginDTO;
 import com.example.email.ModelDTO.LoginUser;
 import com.example.email.Service.LoginService;
@@ -40,6 +41,11 @@ public class LoginController {
             return "errorLogin";
         }
         LoginUser loginUserInfo = loginService.getLoginUserInfo(loginDTO.getEmail(), loginDTO.getPassword());
+        int status=  loginService.getStatus(loginDTO.getEmail());
+        if (status== StaffStatus.QUIT.getStatus()){
+            bindingResult.rejectValue("email","员工已经离职，账号已被停用","员工已经辞职，账号已被停用");
+            return "errorLogin";
+        }
         String token = UUID.randomUUID().toString();
         loginService.updateToken(token,loginUserInfo.getEmail());
         session.setAttribute("user",loginUserInfo);

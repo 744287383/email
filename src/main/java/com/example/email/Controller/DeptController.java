@@ -89,6 +89,11 @@ public class DeptController {
             result.put("msg","修改失败，不存在该部门！");
             return result;
         }
+        Dept deptByDeptName = deptInfoServiceIMP.getDeptByDeptName(deptName);
+        if (null!=deptByDeptName){
+            result.put("msg","修改失败，该部门已存在");
+            return result;
+        }
         dept=new Dept();
         dept.setDeptName(deptName);
         dept.setDeptNo(deptNo);
